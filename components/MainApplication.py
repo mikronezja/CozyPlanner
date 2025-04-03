@@ -1,12 +1,14 @@
 from .NavigationBar.Navbar import Navbar
 import flet as ft 
 from .ToDoListPage import ToDoListPage
+from .EisenHowerPage import EisenHowerPage
 
 BGCOLOR = "#a7dfff"
 
 class MainApplication:
     def __init__(self, page : ft.Page):
         self.page = page
+        self.tasks = [] # poki co takie rozwiazanie - potem moze jakas bazka 
     
     def route_change(self, e : ft.RouteChangeEvent) -> None:
         self.page.views.clear()
@@ -36,7 +38,7 @@ class MainApplication:
                 ft.View(
                     route=e.route,
                     bgcolor= BGCOLOR,
-                    controls=[navbar_container])
+                    controls=[navbar_container, EisenHowerPage().get_container()])
             )
 
         ## To do list Page
@@ -45,7 +47,7 @@ class MainApplication:
                 ft.View(
                     route=e.route,
                     bgcolor= BGCOLOR,
-                    controls=[navbar_container, ToDoListPage().get_container()])
+                    controls=[navbar_container, ToDoListPage(self.tasks,self.page).get_container()])
             )
 
         self.page.update()
