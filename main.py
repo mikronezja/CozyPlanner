@@ -1,9 +1,10 @@
 import flet as ft 
-from components.MainApplication import MainApplication
+from Components.MainApplication import MainApplication
 
 ## main page of the programme
 def main(page: ft.Page):
-    print("heeloo!")
+   main_app = MainApplication(page) # creating a main app page
+   main_app.display()
 
 
 ft.app(target=main)
