@@ -1,14 +1,13 @@
 import flet as ft 
 from .NavbarItem import NavbarItem
 
-TEXT_COLOR = "#f8fdfe"
-TEXT_SIZE = 10
+TEXT_COLOR = "black"
 NAVBAR_HEIGHT = 60
 SPACING = 20
 
 class Navbar: 
-    def __init__(self, pages_list, screen_width):
-       self.text_container_list =  [ NavbarItem(text, TEXT_COLOR, TEXT_SIZE).get_container() for text in pages_list ] 
+    def __init__(self, pages_list, screen_width, page):
+       self.text_container_list =  [ NavbarItem(text, TEXT_COLOR, page_link, page).get_container() for text, page_link in pages_list ] 
 
        self.navbar_item_list = ft.Row( 
            controls=self.text_container_list, 
