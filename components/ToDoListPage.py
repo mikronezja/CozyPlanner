@@ -4,5 +4,5 @@ class ToDoListPage:
     def __init__(self):
         pass
 
-    def get_container():
+    def get_container(self):
         return ft.Text(value="To do list!", size = 20)

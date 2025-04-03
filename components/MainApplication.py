@@ -1,5 +1,6 @@
 from .NavigationBar.Navbar import Navbar
 import flet as ft 
+from .ToDoListPage import ToDoListPage
 
 BGCOLOR = "#a7dfff"
 
@@ -44,7 +45,7 @@ class MainApplication:
                 ft.View(
                     route=e.route,
                     bgcolor= BGCOLOR,
-                    controls=[navbar_container])
+                    controls=[navbar_container, ToDoListPage().get_container()])
             )
 
         self.page.update()
