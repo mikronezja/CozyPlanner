@@ -48,7 +48,7 @@ class MainApplication:
                 ft.View(
                     route=e.route,
                     bgcolor= BGCOLOR,
-                    controls=[navbar_container, ToDoListPage(self.tasks,self.page).get_container()])
+                    controls=[navbar_container, ToDoListPage(self.tasks).get_container()])
             )
 
         self.page.update()

@@ -1,8 +1,9 @@
 import flet as ft 
 
 # going to use the ft.Image class for this
-class NavbarItem: 
+class NavbarItem: # moze dizedziczyc po ft.ElevatedButton! 
     def __init__(self, text, color, page_to_link_to, page):
+        super().__init__()
         self.text = text
         self.color = color
         self.page = page

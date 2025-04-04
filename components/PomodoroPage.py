@@ -38,7 +38,7 @@ class PomodoroPage:
         self.start_button.disabled=False
         self.pause_button.disabled=True
         self.stop_button.disabled=True
-    def update_timer_display():
+    def update_timer_display(self):
         mins,secs=divmod(self.time_left,60)
         self.timer_text.value=f"{mins:02}:{secs:02}"
         self.timer_text.update()

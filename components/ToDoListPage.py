@@ -1,34 +1,49 @@
 import flet as ft 
 from .TodoListElements.InputTask import InputTask
 from .TodoListElements.Task import Task
+from .TodoListElements.TaskDisplay import TaskDisplay
 
 class ToDoListPage:
-    def __init__(self, tasks, page):
+    def __init__(self, tasks):
        
        self.tasks = tasks 
-       self.page = page
 
        self.create_task_button = ft.ElevatedButton(
            text="Create task", 
            on_click=self.on_create_button_visible_click, 
            visible=True)
        
-       self.input_task = InputTask(lambda name, desc: self.on_input_task_click(name, desc)).get_container() ## !!!
-       self.input_task.visible = False
-       
-       self.container = ft.Column([self.create_task_button, self.input_task])
+       self.input_task = InputTask(lambda name, desc: self.on_input_task_click(name, desc))
+
+       self.task_display = TaskDisplay(self.tasks)
+
+       self.container = ft.Row( 
+           controls=[ft.Column(controls=[self.create_task_button, self.input_task.get_container(), self.task_display.get_container()])],
+            alignment=ft.MainAxisAlignment.CENTER,
+            expand=True)
 
     def on_create_button_visible_click(self, e):
         self.create_task_button.visible = False 
-        self.input_task.visible = True
-        self.page.update()
+        self.input_task.reset_field_values()
+        self.input_task.set_visible(True)
+        self.update_all()
 
     def on_input_task_click(self, name : str, desc : str):
         self.create_task_button.visible = True 
-        self.input_task.visible = False
-        self.tasks.append(Task(name, desc))
-        self.page.update()
-        print(len(self.tasks))
+        ###
+        new_task = Task(name, desc)
+        self.tasks.append(new_task)
+        print(self.tasks)
+        self.task_display.task_append(new_task)
+        ###
+        self.input_task.set_visible(False)
+        ###
+        self.update_all()
+
+    def update_all(self):
+        self.input_task.update()
+        self.create_task_button.update()
+        self.container.update()
 
     def get_container(self):
         return self.container
