@@ -5,10 +5,10 @@ import threading
 class PomodoroPage:
     def __init__(self):
         self.main_text=ft.Text("Welcome to POMIDORO. IF READY CLICK START", size=30, weight=ft.FontWeight.BOLD, color=("#01C5C4"))
-        self.time_left=0.2*60
+        self.time_left=25*60
         self.running=False
         self.on_break=False
-        self.break_time=0.1*60
+        self.break_time=5*60
         self.timer_text=ft.Text("25:00", size=50, weight=ft.FontWeight.BOLD, color=("#01C5C4"))
         self.start_button=ft.ElevatedButton("START", on_click=self.start_timer, bgcolor=("#b8de6f"), color=("#01C5C4"))
         self.stop_button=ft.ElevatedButton("STOP", on_click=self.stop_timer,bgcolor=("#b8de6f"), color=("#01C5C4"))
