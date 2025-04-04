@@ -2,6 +2,7 @@ from .NavigationBar.Navbar import Navbar
 import flet as ft 
 from .ToDoListPage import ToDoListPage
 from .EisenHowerPage import EisenHowerPage
+from .PomodoroPage import PomodoroPage
 
 BGCOLOR = "#a7dfff"
 
@@ -29,7 +30,7 @@ class MainApplication:
                 ft.View(
                     route=e.route,
                     bgcolor= BGCOLOR,
-                    controls=[navbar_container])
+                    controls=[navbar_container, PomodoroPage().get_container()])
             )
 
         ## EisenHower Page
