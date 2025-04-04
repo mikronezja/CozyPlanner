@@ -38,6 +38,8 @@ class TaskDisplay: # single task displayed
         self.tasks[index].completed = self.task_container[index].value # updates the values of 
         self.task_container[index].update()
 
+    def set_visible(self, value):
+        self.container.visible = value
 
     def get_container(self):
         return self.container

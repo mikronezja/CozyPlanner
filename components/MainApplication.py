@@ -39,7 +39,7 @@ class MainApplication:
                 ft.View(
                     route=e.route,
                     bgcolor= BGCOLOR,
-                    controls=[navbar_container, EisenHowerPage().get_container()])
+                    controls=[navbar_container, EisenHowerPage(self.tasks).get_container()])
             )
 
         ## To do list Page

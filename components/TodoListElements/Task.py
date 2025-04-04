@@ -2,10 +2,12 @@
 # Later displayed in EisenHower Matrix
 
 class Task: 
-    def __init__(self, name, desc):
+    def __init__(self, name, desc, importance):
         self.name = name 
         self.desc = desc 
-        self.completed = False # domyslnie tworzony ma wartosc False
+        self.completed = False # default value is false
+        self.importance = importance # the importance of a task
+
     def task_completed(self):
         self.completed = True
     def task_not_completed(self):

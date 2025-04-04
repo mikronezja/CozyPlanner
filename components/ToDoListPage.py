@@ -13,7 +13,7 @@ class ToDoListPage:
            on_click=self.on_create_button_visible_click, 
            visible=True)
        
-       self.input_task = InputTask(lambda name, desc: self.on_input_task_click(name, desc))
+       self.input_task = InputTask(on_input_task_click=lambda name, desc: self.on_input_task_click(name, desc))
 
        self.task_display = TaskDisplay(self.tasks)
 
@@ -24,16 +24,18 @@ class ToDoListPage:
 
     def on_create_button_visible_click(self, e):
         self.create_task_button.visible = False 
+        self.task_display.set_visible(False)
+
         self.input_task.reset_field_values()
         self.input_task.set_visible(True)
         self.update_all()
 
     def on_input_task_click(self, name : str, desc : str):
         self.create_task_button.visible = True 
+        self.task_display.set_visible(True)
         ###
-        new_task = Task(name, desc)
+        new_task = Task(name, desc, self.input_task.task_importance.value)
         self.tasks.append(new_task)
-        print(self.tasks)
         self.task_display.task_append(new_task)
         ###
         self.input_task.set_visible(False)
