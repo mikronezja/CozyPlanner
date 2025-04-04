@@ -16,40 +16,21 @@ class MainApplication:
         navbar_container = Navbar( [("Home","/"),("Eisenhower Matrix","/eisenhwr"), ("To-do list","/todo"), ("Pomodoro","/pmdr")], 
                         self.page.window.width, self.page).get_container()
         
-        ## Home page
-        if e.route == "/": 
-            self.page.views.append(
-                ft.View(
-                    route=e.route,
-                    bgcolor= BGCOLOR,
-                    controls=[navbar_container])
-            )
-        ## Pomodoro Page
-        if e.route == "/pmdr":
-            self.page.views.append(
-                ft.View(
-                    route=e.route,
-                    bgcolor= BGCOLOR,
-                    controls=[navbar_container, PomodoroPage().get_container()])
-            )
+        route_map = {
+            "/": None,
+            "/eisenhwr":EisenHowerPage(self.tasks).get_container(),
+            "/pmdr":PomodoroPage().get_container(),
+            "/todo":ToDoListPage(self.tasks).get_container()
+        }
 
-        ## EisenHower Page
-        if e.route == "/eisenhwr":
-            self.page.views.append(
-                ft.View(
-                    route=e.route,
-                    bgcolor= BGCOLOR,
-                    controls=[navbar_container, EisenHowerPage(self.tasks).get_container()])
-            )
-
-        ## To do list Page
-        if e.route == "/todo":
-            self.page.views.append(
-                ft.View(
-                    route=e.route,
-                    bgcolor= BGCOLOR,
-                    controls=[navbar_container, ToDoListPage(self.tasks).get_container()])
-            )
+        content = route_map.get(e.route)
+    
+        self.page.views.append(
+        ft.View(
+            route=e.route,
+            bgcolor=BGCOLOR,
+            controls=[navbar_container] + ([content] if content else []))
+        )
 
         self.page.update()
 
