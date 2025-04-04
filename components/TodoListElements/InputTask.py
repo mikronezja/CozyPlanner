@@ -1,5 +1,7 @@
 import flet as ft 
 
+SLIDER_COLOR = ft.Colors.BLACK
+
 class InputTask:
     def __init__(self, on_input_task_click, _visible = False):
         self.name_text_field = ft.TextField( hint_text="Task name...",
@@ -27,8 +29,8 @@ class InputTask:
             divisions=3,
             max=3,
             min=0,
-            active_color=ft.Colors.PURPLE,
-            thumb_color=ft.Colors.PURPLE,
+            active_color=SLIDER_COLOR,
+            thumb_color=SLIDER_COLOR,
             on_change=handle_change,
             visible=_visible
         )
