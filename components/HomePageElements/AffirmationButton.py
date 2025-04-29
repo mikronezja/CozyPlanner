@@ -10,7 +10,7 @@ class AffirmationButton:
         api_key = os.getenv("OPENAI_API_KEY")
         ai.configure(api_key=api_key)
     def get_container(self):
-        return ft.FilledButton(text="Affirmation", on_click=self.on_click_function)
+        return ft.FilledButton(text="Affirmation",bgcolor=ft.Colors.PINK_200, on_click=self.on_click_function)
     def get_response(self):
         model = ai.GenerativeModel("gemini-1.5-flash")
         prompt = "You are a kind motivational spreaker give me a unique short positive affirmation"
