@@ -7,7 +7,7 @@ from .HomePage import HomePage
 import icons
 
 BGCOLOR = "#a7dfff"
-
+BGIMAGE="background/bgpng.png"
 class MainApplication:
     def __init__(self, page : ft.Page):
         self.page = page
@@ -28,12 +28,22 @@ class MainApplication:
         }
 
         content = route_map.get(e.route)
-    
+
+        #background = ft.Image(src=BGIMAGE, fit=ft.ImageFit.COVER, width=self.page.window.width, height=self.page.window.height)
+
         self.page.views.append(
         ft.View(
+            
             route=e.route,
-            bgcolor=BGCOLOR,
+            bgcolor=ft.Colors.TRANSPARENT,
+            decoration=ft.BoxDecoration(image=ft.DecorationImage(src='background/bgpng.png',fit=ft.ImageFit.COVER)),
             controls=[navbar_container] + ([content] if content else []))
+        #     controls=[
+        #             ft.Stack(  # Stack pozwala na warstwowanie elementów
+        #                 controls=[background, navbar_container] + ([content] if content else [])
+        #             )
+        #         ]
+        # ))
         )
 
         self.page.update()
