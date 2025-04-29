@@ -3,11 +3,11 @@ from .NavbarItem import NavbarItem
 
 TEXT_COLOR = "black"
 NAVBAR_HEIGHT = 60
-SPACING = 20
+SPACING = 50
 
 class Navbar: 
     def __init__(self, pages_list, screen_width, page):
-       self.text_container_list =  [ NavbarItem(text, TEXT_COLOR, page_link, page).get_container() for text, page_link in pages_list ] 
+       self.text_container_list =  [ NavbarItem(text, TEXT_COLOR, page_link, page,icon).get_container() for text, page_link,icon in pages_list ] 
 
        self.navbar_item_list = ft.Row( 
            controls=self.text_container_list, 
@@ -17,7 +17,7 @@ class Navbar:
        
        self.container = ft.Container( 
            content = ft.Stack( 
-               controls=[ft.Container(bgcolor="black",expand=True), 
+               controls=[ft.Container(expand=True,disabled=True), 
                          ft.Container( content=self.navbar_item_list, 
                                       alignment=ft.alignment.center, 
                                       expand=True )
@@ -25,7 +25,8 @@ class Navbar:
                ),
            width=screen_width,
            height=NAVBAR_HEIGHT,
-           alignment=ft.alignment.center          
+           alignment=ft.alignment.center,
+           margin=ft.margin.only(left= 0, top=20,right=0, bottom=30)   
         )
 
     def get_container(self):

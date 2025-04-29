@@ -3,6 +3,7 @@ import flet as ft
 from .ToDoListPage import ToDoListPage
 from .EisenHowerPage import EisenHowerPage
 from .PomodoroPage import PomodoroPage
+import icons
 
 BGCOLOR = "#a7dfff"
 
@@ -13,9 +14,11 @@ class MainApplication:
     
     def route_change(self, e : ft.RouteChangeEvent) -> None:
         self.page.views.clear()
-        navbar_container = Navbar( [("Home","/"),("Eisenhower Matrix","/eisenhwr"), ("To-do list","/todo"), ("Pomodoro","/pmdr")], 
+        navbar_container = Navbar( [("Home","/", "icons/home_icon.png"),("Eisenhower Matrix","/eisenhwr","icons/eisenhower_icon.png"), ("To-do list","/todo", "icons/todo_icon.png"), ("Pomodoro","/pmdr", "icons/clock_icon.png")], 
                         self.page.window.width, self.page).get_container()
         
+        # navbar_container = Navbar( [("Home","/"),("Eisenhower Matrix","/eisenhwr"), ("To-do list","/todo"), ("Pomodoro","/pmdr")], 
+        #                 self.page.window.width, self.page).get_container()
         route_map = {
             "/": None,
             "/eisenhwr":EisenHowerPage(self.tasks).get_container(),
