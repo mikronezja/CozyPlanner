@@ -6,7 +6,7 @@ class EisenHowerPage:
         self.tasks = tasks
 
         def create_container(task):
-            return ft.Text(value=task.name, size = 14)
+            return ft.Text(value=task.name, size = 18, color=ft.Colors.BLUE_GREY_800)
 
         if len(self.tasks) > 0:
             divider = [ ft.Column(spacing=10) for _ in range(4) ] 
@@ -22,29 +22,33 @@ class EisenHowerPage:
                         divider[3].controls.append(create_container(task))
 
             top_labels = ft.Row([
-            ft.Container(content=ft.Text("Urgent", size=16, weight=ft.FontWeight.BOLD), expand=True, alignment=ft.alignment.center),
-            ft.Container(content=ft.Text("Not Urgent", size=16, weight=ft.FontWeight.BOLD), expand=True, alignment=ft.alignment.center),
+            ft.Container(content=ft.Text("Urgent", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_GREY_800), expand=True, alignment=ft.alignment.center),
+            ft.Container(content=ft.Text("Not Urgent", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_GREY_800), expand=True, alignment=ft.alignment.center),
             ])
 
             top_row = ft.Row(controls=[
-                ft.Container(content=divider[3], bgcolor=ft.Colors.YELLOW_200, padding=10, expand=True),  # Important, Urgent
-                ft.Container(content=divider[2], bgcolor=ft.Colors.GREEN_200, padding=10, expand=True),    # Important, Not Urgent
+                ft.Container(content=divider[3], image=ft.DecorationImage(src="icons/cont/e_yellow.png",fit=ft.ImageFit.FILL), padding=30, expand=True),  # Important, Urgent
+                ft.Container(content=divider[2], image=ft.DecorationImage(src="icons/cont/e_green.png",fit=ft.ImageFit.FILL), padding=30, expand=True),    # Important, Not Urgent
             ], expand=True)
 
             bottom_row = ft.Row(controls=[
-                ft.Container(content=divider[1], bgcolor=ft.Colors.BLUE_200, padding = 10, expand=True),  # Not Important, Urgent
-                ft.Container(content=divider[0], bgcolor=ft.Colors.RED_200, padding = 10, expand=True)   # Not Important, Not Urgent
+                ft.Container(content=divider[1], image=ft.DecorationImage(src="icons/cont/e_blue.png",fit=ft.ImageFit.FILL), padding = 30, expand=True),  # Not Important, Urgent
+                ft.Container(content=divider[0], image=ft.DecorationImage(src="icons/cont/e_pink.png",fit=ft.ImageFit.FILL), padding = 30, expand=True)   # Not Important, Not Urgent
             ], expand=True)
 
             left_labels = ft.Column([
-                ft.Container(content=ft.Text("Important", size=16, weight=ft.FontWeight.BOLD, rotate=ft.Rotate(angle=-math.pi/2)), expand=True, alignment=ft.alignment.center),
-                ft.Container(content=ft.Text("Not Important", size=16, weight=ft.FontWeight.BOLD, rotate=ft.Rotate(angle=-math.pi/2)), expand=True, alignment=ft.alignment.center),
+                ft.Container(content=ft.Text("Important", size=20,color=ft.Colors.BLUE_GREY_800, weight=ft.FontWeight.BOLD, rotate=ft.Rotate(angle=-math.pi/2)), expand=True, alignment=ft.alignment.center),
+                ft.Container(content=ft.Text("Not Important", size=20,color=ft.Colors.BLUE_GREY_800, weight=ft.FontWeight.BOLD, rotate=ft.Rotate(angle=-math.pi/2)), expand=True, alignment=ft.alignment.center),
             ])
 
             self.container = ft.Row( [left_labels,
                                     ft.Column(controls=[top_labels,top_row,bottom_row], 
                                     expand=True)], alignment=ft.alignment.center, expand=True )
         else:
-            self.container = ft.Text(value="No tasks have been added")
+            self.container = ft.Container(
+                content=ft.Text(value="No tasks have been added",color=ft.Colors.BLUE_GREY_800, size=25),
+                alignment=ft.alignment.center,
+                margin=ft.margin.only(top=50)
+                )
     def get_container(self):
         return self.container
