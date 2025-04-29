@@ -83,8 +83,8 @@ class PomodoroPage:
     def get_container(self):
 
         return ft.Container(
-            bgcolor=ft.Colors.with_opacity(0.5,("#F1E189")),
-            margin=ft.margin.only(left=200,right=200,top=50,bottom=50),
+            bgcolor=ft.Colors.with_opacity(0.95,("#F1E189")),
+            margin=ft.margin.only(left=200,right=200,top=10,bottom=50),
             border_radius=ft.border_radius.all(30),
             content=ft.Column(
                 [   self.main_text,
