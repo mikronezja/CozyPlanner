@@ -12,14 +12,16 @@ class EisenHowerPage:
             divider = [ ft.Column(spacing=10) for _ in range(4) ] 
             for task in self.tasks:
                 match task.importance:
-                    case 0: # Not Important, Not Urgent
-                        divider[0].controls.append(create_container(task))
-                    case 1: # Not Important, Urgent
-                        divider[1].controls.append(create_container(task))
-                    case 2: # Important, Not Urgent
-                        divider[2].controls.append(create_container(task))   
-                    case 3: # Important, Urgent 
-                        divider[3].controls.append(create_container(task))
+                    case 0:
+                        if task.urgency == 0:
+                            divider[0].controls.append(create_container(task))
+                        else:
+                           divider[1].controls.append(create_container(task)) 
+                    case 1:
+                        if task.urgency == 0:
+                            divider[2].controls.append(create_container(task))
+                        else:
+                            divider[3].controls.append(create_container(task))
 
             top_labels = ft.Row([
             ft.Container(content=ft.Text("Urgent", size=16, weight=ft.FontWeight.BOLD), expand=True, alignment=ft.alignment.center),
