@@ -3,6 +3,7 @@ import flet as ft
 from .ToDoListPage import ToDoListPage
 from .EisenHowerPage import EisenHowerPage
 from .PomodoroPage import PomodoroPage
+from .HomePage import HomePage
 import icons
 
 BGCOLOR = "#a7dfff"
@@ -20,7 +21,7 @@ class MainApplication:
         # navbar_container = Navbar( [("Home","/"),("Eisenhower Matrix","/eisenhwr"), ("To-do list","/todo"), ("Pomodoro","/pmdr")], 
         #                 self.page.window.width, self.page).get_container()
         route_map = {
-            "/": None,
+            "/": HomePage().get_container(),
             "/eisenhwr":EisenHowerPage(self.tasks).get_container(),
             "/pmdr":PomodoroPage().get_container(),
             "/todo":ToDoListPage(self.tasks).get_container()

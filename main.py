@@ -10,7 +10,6 @@ def main(page: ft.Page):
    hover_color=ft.Colors.GREEN_900,
    shadow_color=ft.Colors.GREEN_900,
    highlight_color=ft.Colors.CYAN_400
-   
    )
 
    

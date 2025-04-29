@@ -1,7 +1,8 @@
 import flet as ft 
 
 BGCOLOR="white"
-BORDER_RADIUS=5
+BORDER_RADIUS = 5
+MARGIN = 10
 
 class TaskDisplay: # single task displayed 
     def __init__(self, tasks):
@@ -21,7 +22,9 @@ class TaskDisplay: # single task displayed
 
         self.container = ft.Container(content=self.task_column, 
                                       bgcolor=BGCOLOR,
-                                      border_radius=BORDER_RADIUS)
+                                      border_radius=BORDER_RADIUS,
+                                      alignment=ft.alignment.center,
+                                      margin=MARGIN)
     
     def task_append(self, task):
         next_index = len(self.task_container)

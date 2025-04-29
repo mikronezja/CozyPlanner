@@ -34,7 +34,7 @@ class ToDoListPage:
         self.create_task_button.visible = True 
         self.task_display.set_visible(True)
         ###
-        new_task = Task(name, desc, self.input_task.task_importance.value)
+        new_task = Task(name, desc, self.input_task.task_importance.value, self.input_task.task_urgency.value)
         self.tasks.append(new_task)
         self.task_display.task_append(new_task)
         ###
