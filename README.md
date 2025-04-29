@@ -4,7 +4,7 @@
 ## 📅 Calendar in which you can: 
 * 🖋️ Journal
 * 😃 Click your mood 😡
-* 🎉 Events
+* 🎉 Add events
 ## 🤖 Using AI to generate possitive affirmations for the user
 ## 🖼️ Flet framework to create graphics
 
