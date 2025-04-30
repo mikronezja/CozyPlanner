@@ -28,7 +28,9 @@ class CalendarPage:
         month_container = MonthContainer(year=self.displayed_year, month=self.displayed_month)
         return ft.Container(
             content=ft.Column(controls=[
-                ft.Row(controls=[ft.Text(self.displayed_year)],alignment = ft.alignment.center), ft.Row(controls=[ft.Text(self.month_class[self.displayed_month])]), ft.Row(controls=[month_container.get_container()])
+                ft.Row(controls=[ft.Button(text="<-"), ft.Text(self.displayed_year), ft.Button(text="->")],alignment = ft.alignment.center), 
+                ft.Row(controls=[ft.Button(text="<-"),ft.Text(self.month_class[self.displayed_month]), ft.Button(text="->") ]), 
+                ft.Row(controls=[month_container.get_container()])
             ], alignment=ft.alignment.center, expand=True),
             alignment=ft.alignment.center,
             expand=True
