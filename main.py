@@ -17,5 +17,4 @@ def main(page: ft.Page):
    main_app.display()
 
 
-
 ft.app(target=main)
