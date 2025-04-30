@@ -20,18 +20,43 @@ class CalendarPage:
             12: "December"
         }
         todays_date = datetime.datetime.now()
-        self.displayed_year = todays_date.year
-        self.displayed_month = todays_date.month
-        self.displayed_day = todays_date.day
+        self.displayed_year = ft.Text(value=todays_date.year)
+        self.displayed_month = ft.Text(todays_date.month)
+        self.displayed_day = ft.Text(todays_date.day)
+        self.month_text = ft.Text(value=self.month_class[todays_date.month])
+
+        self.month_container = MonthContainer(year=int(self.displayed_year.value), month=int(self.displayed_month.value)).get_container()
+        self.calendar_container = ft.Container(
+                    content=ft.Column(controls=[
+                        ft.Row(controls=[ft.Button(text="<-", on_click= lambda _: self.change_year(-1)),self.displayed_year, ft.Button(text="->", on_click= lambda _:self.change_year(1))],alignment = ft.alignment.center), 
+                        ft.Row(controls=[ft.Button(text="<-", on_click=lambda _:self.change_month(-1)), self.month_text, ft.Button(text="->", on_click=lambda _:self.change_month(1)) ]),
+                        ft.Row(controls=[self.month_container])
+                    ], alignment=ft.alignment.center, expand=True),
+                    alignment=ft.alignment.center,
+                    expand=True
+                )
 
     def get_container(self):
-        month_container = MonthContainer(year=self.displayed_year, month=self.displayed_month)
-        return ft.Container(
-            content=ft.Column(controls=[
-                ft.Row(controls=[ft.Button(text="<-"), ft.Text(self.displayed_year), ft.Button(text="->")],alignment = ft.alignment.center), 
-                ft.Row(controls=[ft.Button(text="<-"),ft.Text(self.month_class[self.displayed_month]), ft.Button(text="->") ]), 
-                ft.Row(controls=[month_container.get_container()])
-            ], alignment=ft.alignment.center, expand=True),
-            alignment=ft.alignment.center,
-            expand=True
-        )
+        return self.calendar_container
+    def change_month(self, value):
+        month = int(self.displayed_month.value) + value
+        year = int(self.displayed_year.value)
+
+        if month == 0:
+            month = 12
+            year -= 1
+        elif month == 13:
+            month = 1
+            year += 1
+
+        self.displayed_month.value = str(month)
+        self.displayed_year.value = str(year)
+        self.month_text.value = self.month_class[month]
+        self.month_container.controls = [MonthContainer(month=month, year=year).get_container()]
+
+        self.calendar_container.update()
+    
+    def change_year(self, value):
+        self.displayed_year.value = str(int(self.displayed_year.value) + value)
+        self.month_container.controls = [MonthContainer(month=int(self.displayed_month.value), year=int(self.displayed_year.value)).get_container()]
+        self.calendar_container.update()
