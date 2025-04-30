@@ -5,7 +5,8 @@ from .EisenHowerPage import EisenHowerPage
 from .PomodoroPage import PomodoroPage
 from .HomePage import HomePage
 from .CalendarPage import CalendarPage
-import icons
+# from .CalendarElements.CalendarDatabase import DatabaseManager
+# import icons
 
 BGCOLOR = "#a7dfff"
 BGIMAGE="background/bgpng.png"
@@ -39,17 +40,10 @@ class MainApplication:
 
         self.page.views.append(
         ft.View(
-            
             route=e.route,
             bgcolor=ft.Colors.TRANSPARENT,
             decoration=ft.BoxDecoration(image=ft.DecorationImage(src='background/bgpng.png',fit=ft.ImageFit.COVER)),
             controls=[navbar_container] + ([content] if content else []))
-        #     controls=[
-        #             ft.Stack(  # Stack pozwala na warstwowanie elementów
-        #                 controls=[background, navbar_container] + ([content] if content else [])
-        #             )
-        #         ]
-        # ))
         )
 
         self.page.update()
