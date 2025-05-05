@@ -7,9 +7,9 @@ def main(page: ft.Page):
       "Pixelify Sans" : "fonts/PixelifySans-VariableFont_wght.ttf"
    }
    page.theme=ft.Theme(font_family="Pixelify Sans",
-   hover_color=ft.Colors.GREEN_900,
-   shadow_color=ft.Colors.GREEN_900,
-   highlight_color=ft.Colors.CYAN_400
+   # hover_color=ft.Colors.GREEN_900,
+   # shadow_color=ft.Colors.GREEN_900,
+   # highlight_color=ft.Colors.CYAN_400
    )
 
    
