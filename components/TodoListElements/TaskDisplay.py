@@ -1,6 +1,6 @@
 import flet as ft 
 
-BGCOLOR="white"
+BGCOLOR = "white"
 BORDER_RADIUS = 5
 MARGIN = 10
 
@@ -8,7 +8,7 @@ class TaskDisplay: # single task displayed
     def __init__(self, tasks):
         self.tasks = tasks
         self.task_container = []
-        self.task_column = ft.Column()
+        self.task_column = ft.Column(spacing=30)
 
         for i, task in enumerate(tasks):
             check_box = ft.Checkbox(
@@ -21,7 +21,6 @@ class TaskDisplay: # single task displayed
             self.task_column.controls.append(check_box)
 
         self.container = ft.Container(content=self.task_column, 
-                                      bgcolor=BGCOLOR,
                                       border_radius=BORDER_RADIUS,
                                       alignment=ft.alignment.center,
                                       margin=MARGIN)
