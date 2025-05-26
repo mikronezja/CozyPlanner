@@ -23,7 +23,7 @@ class MonthContainer:
 
         header_row = ft.Row()
         for i in range(len(days_of_week)):
-            header_row.controls.append(ft.Container(content=ft.Text(days_of_week[i]), width=20, height=20))
+            header_row.controls.append(ft.Container(content=ft.Text(days_of_week[i],size=30, color=ft.Colors.BLUE_GREY_800), width=50, height=50))
 
         column.controls.append(header_row)
 
