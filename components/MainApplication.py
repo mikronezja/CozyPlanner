@@ -16,9 +16,9 @@ class MainApplication:
         self.tasks = [] # poki co takie rozwiazanie - potem moze jakas bazka 
     
     def route_change(self, e : ft.RouteChangeEvent) -> None:
-        self.page.views.clear()
+        #self.page.views.clear()
         navbar_container = Navbar( [("Home","/", "icons/home_icon.png"),
-                                    ("Eisenhower Matrix","/eisenhwr","icons/eisenhower_icon.png"), 
+                                    ("Task Matrix","/eisenhwr","icons/eisenhower_icon.png"), 
                                     ("To-do list","/todo", "icons/todo_icon.png"), 
                                     ("Pomodoro","/pmdr", "icons/clock_icon.png"), 
                                     ("Calendar","/clndr","icons/calendar.png")], 
@@ -35,7 +35,7 @@ class MainApplication:
         }
 
         content = route_map.get(e.route)
-
+        
         #background = ft.Image(src=BGIMAGE, fit=ft.ImageFit.COVER, width=self.page.window.width, height=self.page.window.height)
 
         self.page.views.append(
@@ -45,7 +45,6 @@ class MainApplication:
             decoration=ft.BoxDecoration(image=ft.DecorationImage(src='background/bgpng.png',fit=ft.ImageFit.COVER)),
             controls=[navbar_container] + ([content] if content else []))
         )
-
         self.page.update()
 
     def display(self): # ALWAYS REMEMBER TO UPDATE THE PAGE!

@@ -3,15 +3,22 @@ from .TodoListElements.InputTask import InputTask
 from .TodoListElements.Task import Task
 from .TodoListElements.TaskDisplay import TaskDisplay
 
+button_src="icons/task_button.png"
 class ToDoListPage:
     def __init__(self, tasks):
        
        self.tasks = tasks 
+       self.create_task_button=ft.Container(
+            content=ft.Image(src=button_src,width=200),
+            on_click=self.on_create_button_visible_click,
+            on_hover=self._on_hover,
+            offset=ft.Offset(0,0)
+        )
 
-       self.create_task_button = ft.ElevatedButton(
-           text="Create task", 
-           on_click=self.on_create_button_visible_click, 
-           visible=True)
+    #    self.create_task_button = ft.ElevatedButton(
+    #        text="Create task", 
+    #        on_click=self.on_create_button_visible_click, 
+    #        visible=True)
        
        self.input_task = InputTask(on_input_task_click=lambda name, desc: self.on_input_task_click(name, desc))
 
@@ -22,6 +29,12 @@ class ToDoListPage:
             alignment=ft.MainAxisAlignment.CENTER,
             expand=True)
 
+    def _on_hover(self, e: ft.HoverEvent):
+        if e.data=="true":
+            self.container.offset=ft.Offset(0,0.03)
+        else:
+            self.container.offset=ft.Offset(0,0)
+        self.container.update()
     def on_create_button_visible_click(self, e):
         self.create_task_button.visible = False 
         self.task_display.set_visible(False)

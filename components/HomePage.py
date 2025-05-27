@@ -7,7 +7,7 @@ class HomePage:
         self.affirmation_button = AffirmationButton(self.on_button_click)
         self.text_container = ft.Container(
                     content=self.text_from_ai,
-                    bgcolor=ft.colors.WHITE, 
+                    bgcolor=ft.Colors.WHITE, 
                     alignment=ft.alignment.center,
                     width=100,
                     visible=False
