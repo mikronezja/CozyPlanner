@@ -5,7 +5,7 @@ from .EisenHowerPage import EisenHowerPage
 from .PomodoroPage import PomodoroPage
 from .HomePage import HomePage
 from .CalendarPage import CalendarPage
-# from .CalendarElements.CalendarDatabase import DatabaseManager
+from .CalendarElements.CalendarDatabase import DatabaseManager
 # import icons
 
 BGCOLOR = "#a7dfff"
@@ -13,6 +13,7 @@ BGIMAGE="background/bgpng.png"
 class MainApplication:
     def __init__(self, page : ft.Page):
         self.page = page
+        self.database = DatabaseManager()
         self.tasks = [] # poki co takie rozwiazanie - potem moze jakas bazka 
     
     def route_change(self, e : ft.RouteChangeEvent) -> None:
@@ -24,14 +25,12 @@ class MainApplication:
                                     ("Calendar","/clndr","icons/calendar.png")], 
                         self.page.window.width, self.page).get_container()
         
-        # navbar_container = Navbar( [("Home","/"),("Eisenhower Matrix","/eisenhwr"), ("To-do list","/todo"), ("Pomodoro","/pmdr")], 
-        #                 self.page.window.width, self.page).get_container()
         route_map = {
             "/": HomePage().get_container(),
-            "/eisenhwr":EisenHowerPage(self.tasks).get_container(),
-            "/pmdr":PomodoroPage().get_container(),
-            "/todo":ToDoListPage(self.tasks).get_container(),
-            "/clndr":CalendarPage().get_container()
+            "/eisenhwr":EisenHowerPage(self.tasks, self.database).get_container(),
+            "/pmdr":PomodoroPage(self.database).get_container(),
+            "/todo":ToDoListPage(self.tasks, self.database).get_container(),
+            "/clndr":CalendarPage(self.database).get_container()
         }
 
         content = route_map.get(e.route)

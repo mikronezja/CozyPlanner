@@ -1,28 +1,40 @@
 import flet as ft 
 import math
+import datetime
 
 class EisenHowerPage:
-    def __init__(self, tasks):
-        self.tasks = tasks
+    def __init__(self, tasks, database):
+        # self.tasks = tasks
+        self.database = database
+        
+        now = datetime.datetime.now()
+        day, month, year = now.day, now.month, now.year
+        
+        self.tasks = self.database.get_tasks(day,month,year)
 
-        def create_container(task):
-            return ft.Text(value=task.name, size = 18, color=ft.Colors.BLUE_GREY_800)
+        def create_container(name, task_id): # for task
+            return ft.Row(controls=[ft.Text(value=name, size = 18, color=ft.Colors.BLUE_GREY_800), 
+                                    ft.Checkbox(on_change=lambda e: self.database.change_task_completion(task_id))] ) 
 
         if len(self.tasks) > 0:
             divider = [ ft.Column(spacing=10) for _ in range(4) ] 
-            for task in self.tasks:
-                if not task.completed:
-                    match task.importance:
+
+            for (task_id, date_id, name, desc, completed, urgency, importance) in self.tasks:
+                if not completed:
+                    container = []
+                    match importance:
                         case 0:
-                            if task.urgency == 0:
-                                divider[0].controls.append(create_container(task))
+                            if urgency == 0:
+                                container = divider[0]
                             else:
-                                divider[1].controls.append(create_container(task)) 
+                                container = divider[1]
                         case 1:
-                            if task.urgency == 0:
-                                divider[2].controls.append(create_container(task))
+                            if urgency == 0:
+                                container = divider[2]
                             else:
-                                divider[3].controls.append(create_container(task))
+                                container = divider[3]
+                    container.controls.append(create_container(name,task_id))
+            
 
             top_labels = ft.Row([
             ft.Container(content=ft.Text("Urgent", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_GREY_800), expand=True, alignment=ft.alignment.center),

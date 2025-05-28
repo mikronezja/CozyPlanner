@@ -3,7 +3,7 @@ import time
 import threading
 
 class PomodoroPage:
-    def __init__(self):
+    def __init__(self, database):
         self.main_text=ft.Text("Welcome to POMIDORO. IF READY CLICK START", size=30, weight=ft.FontWeight.BOLD, color=("#01C5C4"))
         self.time_left=25*60
         self.running=False
