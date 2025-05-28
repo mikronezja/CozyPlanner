@@ -23,14 +23,14 @@ class MonthContainer:
 
         header_row = ft.Row()
         for i in range(len(days_of_week)):
-            header_row.controls.append(ft.Container(content=ft.Text(days_of_week[i]), width=20, height=20))
+            header_row.controls.append(ft.Container(content=ft.Text(days_of_week[i],size=30, color=ft.Colors.BLUE_GREY_800), width=100, height=50))
 
         column.controls.append(header_row)
 
         row = ft.Row()
         # dodaje puste pola do poczatku tygodnia
         for _ in range(self.starting_weekday):
-            row.controls.append(ft.Container(width=20,height=20))
+            row.controls.append(ft.Container(width=100,height=50))
 
         for day in self.days_container:
             if len(row.controls) == 7:
