@@ -57,11 +57,11 @@ class EisenHowerPage:
                 margin=ft.margin.only(top=50)
                 )
             
-    def _on_change(self,task_id,divider_index, i):
-        value = self.database.change_task_completion(task_id)
-        if value != None:
-            self._divider[divider_index].visible = value
-            self._divider[divider_index].update()
+    def _on_change(self,task_id, divider_index, i):
+        self.database.change_task_completion(task_id)
+        # if value != None:
+        #     self._divider[divider_index].visible = value
+        #     self._divider[divider_index].update()
             # self.container.controls[i].visible = value
             # self.container.controls[i].update()
 

@@ -30,28 +30,30 @@ class ToDoListPage:
     #     expand=True
     #    )
        self.task_scrollable_container = ft.Container(
-       content=ft.Container(  # wewnętrzny kontener z kolumną zadań
-           content=ft.Column(
-               controls=[self.task_display.get_container()],
-               scroll=ft.ScrollMode.AUTO,
-               expand=True
-           ),
-           height=600,
-           width=400,
-           padding=ft.padding.only(left=30, right=30, top=50, bottom=50),
-           alignment=ft.alignment.top_center,
-       ),
-       border_radius=5,
-       height=600,
-       width=400,
-       margin=ft.margin.only(left=100,right=100),
-       image=ft.DecorationImage(
-           src="icons/list.png",
-           fit=ft.ImageFit.FILL,
-           repeat=ft.ImageRepeat.NO_REPEAT,
-           alignment=ft.alignment.center
-       ),
-       )
+            content=ft.Container(  # inner container with a row of tasks
+                content=ft.Row(
+                    controls=[ ft.Column(controls=[self.task_display.get_container()], 
+                                         scroll=ft.ScrollMode.AUTO) # scrollowanie w pionie
+                                         ],
+                    scroll=ft.ScrollMode.AUTO,  # scrollowanie w poziomie
+                    expand=True
+                ),
+                height=600,
+                width=400,
+                padding=ft.padding.only(left=30, right=30, top=50, bottom=50),
+                alignment=ft.alignment.top_center,
+            ),
+            border_radius=5,
+            height=600,
+            width=400,
+            margin=ft.margin.only(left=100, right=100),
+            image=ft.DecorationImage(
+                src="icons/list.png",
+                fit=ft.ImageFit.FILL,
+                repeat=ft.ImageRepeat.NO_REPEAT,
+                alignment=ft.alignment.center
+            ),
+        )
 
 
        self.right_side=ft.Container(ft.Column(
@@ -102,7 +104,7 @@ class ToDoListPage:
 
     def _on_task_click(name, desc):
         """jesli sie kliknie taska"""
-        
+
         pass
 
 
