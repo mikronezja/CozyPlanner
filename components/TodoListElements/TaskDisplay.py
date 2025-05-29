@@ -50,17 +50,20 @@ class TaskDisplay: # tasks being displayed
                     icon_color=ft.Colors.PINK_400,
                     icon_size=23,
                     tooltip="Remove task",
+                    on_click=lambda e: self._task_removed(task_id, id)
                 )
         
         row = ft.Row(controls=[check_box, remove_button],spacing=0)
         self.task_container.append(row)
         self.task_column.controls.append(row)
 
-        # self.task_container.append(remove_button)
-        # self.task_column.controls.append(remove_button)
-
     def on_change(self, id, i):
         self.database.change_task_completion(id)
+        self.task_container[i].update()
+
+    def _task_removed(self,task_id, i):
+        self.database.remove_task(task_id)
+        self.task_container[i].visible = False
         self.task_container[i].update()
 
     def set_visible(self, value):

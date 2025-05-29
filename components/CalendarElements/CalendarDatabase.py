@@ -86,6 +86,11 @@ class DatabaseManager:
         self.cursor.execute("SELECT * FROM tasks WHERE date_id = ?", (date_id,))
         return self.cursor.fetchall()
 
+    def remove_task(self, task_id):
+        with self.lock:
+            self.cursor.execute("DELETE FROM tasks WHERE id = ?",(task_id,))
+            self.conn.commit()
+
     def add_journal(self, day, month, year, text, mood_score):
         date_id = self.get_date_id(day, month, year)
         self.cursor.execute("INSERT INTO journal (date_id, journal, mood_score) VALUES (?,?,?)", 
