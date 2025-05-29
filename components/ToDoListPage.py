@@ -17,10 +17,10 @@ class ToDoListPage:
             on_hover=self._on_hover,
             offset=ft.Offset(0,0)
         )
-       
+       # dodajemy taska
        self.input_task = InputTask(on_input_task_click=lambda name, desc: self.on_input_task_click(name, desc))
 
-       self.task_display = TaskDisplay(self.database, self.todays_date)
+       self.task_display = TaskDisplay(self.database, self.todays_date, on_task_click=lambda name,desc: self._on_task_click(name,desc) )
     #    self.task_scrollable_container=ft.Container(
     #     content=ft.Column(
     #         controls=[self.task_display.get_container()],
@@ -99,7 +99,14 @@ class ToDoListPage:
         else:
             self.create_task_button.offset=ft.Offset(0,0)
         self.create_task_button.update()
+
+    def _on_task_click(name, desc):
+        """jesli sie kliknie taska"""
         
+        pass
+
+
+
     def on_create_button_visible_click(self, e):
         self.create_task_button.visible = False 
         # self.task_display.set_visible(False)

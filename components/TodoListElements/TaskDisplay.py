@@ -4,8 +4,8 @@ BGCOLOR = "white"
 BORDER_RADIUS = 5
 MARGIN = 10
 
-class TaskDisplay: # single task displayed 
-    def __init__(self, database, todays_date):
+class TaskDisplay: # tasks being displayed
+    def __init__(self, database, todays_date, on_task_click):
         # self.tasks = tasks
 
         self.database = database
@@ -15,15 +15,7 @@ class TaskDisplay: # single task displayed
         self.task_column = ft.Column(spacing=30)
 
         for i, (task_id, date_id, name, desc, completed, urgency, importance) in enumerate(database.get_tasks(*self.todays_date)):
-            check_box = ft.Checkbox(
-                label=name, 
-                value=completed, 
-                on_change=lambda e: self.on_change(task_id, i),
-                label_position=ft.LabelPosition.LEFT,
-                label_style=ft.TextStyle(color=ft.Colors.BLUE_GREY_800, size=23)
-            )
-            self.task_container.append(check_box)
-            self.task_column.controls.append(check_box)
+            self._add_checkbox_removebutton(name,task_id,id=i)
         # end for
 
         self.container = ft.Container(content=self.task_column, 
@@ -41,16 +33,31 @@ class TaskDisplay: # single task displayed
     
     def task_append(self, name, idx_in_database):
         next_index = len(self.task_container)
-        check_box = ft.Checkbox(label=name, 
-                                               check_color=ft.Colors.GREEN,
-                                               fill_color=ft.Colors.YELLOW,
-                                               value=0, 
-                                               on_change=lambda e: self.on_change(idx_in_database, next_index),
-                                               label_position=ft.LabelPosition.LEFT)
-        self.task_container.append(check_box)
-        self.task_column.controls.append(check_box)
+        self._add_checkbox_removebutton(name,idx_in_database,next_index)
         self.task_column.update()
 
+    def _add_checkbox_removebutton(self,name,task_id,id):
+        
+        check_box = ft.Checkbox(label=name, 
+                                check_color=ft.Colors.GREEN,
+                                fill_color=ft.Colors.YELLOW,
+                                value=0, 
+                                on_change=lambda e: self.on_change(task_id, id),
+                                label_position=ft.LabelPosition.LEFT)
+        
+        remove_button = ft.IconButton(
+                    icon=ft.Icons.CANCEL,
+                    icon_color=ft.Colors.PINK_400,
+                    icon_size=23,
+                    tooltip="Remove task",
+                )
+        
+        row = ft.Row(controls=[check_box, remove_button],spacing=0)
+        self.task_container.append(row)
+        self.task_column.controls.append(row)
+
+        # self.task_container.append(remove_button)
+        # self.task_column.controls.append(remove_button)
 
     def on_change(self, id, i):
         self.database.change_task_completion(id)
