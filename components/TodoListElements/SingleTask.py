@@ -6,32 +6,34 @@ class SingleTask:
         (task_id, date_id, name, desc, completed, urgency, importance) = self.database.get_task_with_id(task_id)
 
         (day,month,year) = self.__display_date(date_id)
-        dates = ft.Row(controls=[ft.Text(day,size=10), ft.Text(month,size=10), ft.Text(year,size=10)])
+        dates = ft.Row(controls=[ft.Text(day,size=15,color='#702106'), ft.Text(month,size=15,color='#702106'), ft.Text(year,size=15,color='#702106')])
         
         self.__back_btn = ft.Container(
                     content=ft.Image(src="../icons/go_back.png",width=200),
                     on_click=go_back,
                     offset=ft.Offset(0,0),
-                    width=70,
+                    width=100,
                     on_hover=self.__on_hover
                 )
 
         main_row = ft.Row(
             controls=[
-                ft.Container(content=dates, width=80),
+                # ft.Container(content=dates, width=80),
                 ft.Container(
-                    content=ft.Text(name, overflow=ft.TextOverflow.ELLIPSIS),
-                    width=130,
-                    expand=False
+                    content=ft.Text(name, overflow=ft.TextOverflow.ELLIPSIS,color='#702106',size=24,max_lines=5,text_align=ft.TextAlign.CENTER),
+                    width=250,
+                    expand=False,
+                    alignment=ft.alignment.center
+
                 ),
-                self.__back_btn
+                # self.__back_btn
             ],
             spacing=20,
             alignment=ft.MainAxisAlignment.CENTER
         )
 
-        desciption = ft.Row(controls=[ft.Text(desc)],width=200)
-        self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),main_row, desciption]), width=300)
+        desciption = ft.Row(controls=[ft.Text(desc,color='#702106',size=18,max_lines=None,no_wrap=False,text_align=ft.TextAlign.START)],width=200)
+        self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),ft.Container(content=dates, width=80),main_row, desciption,self.__back_btn], horizontal_alignment=ft.CrossAxisAlignment.CENTER,spacing=5), width=300)
 
     def __display_date(self, date_id):
         month_class = {

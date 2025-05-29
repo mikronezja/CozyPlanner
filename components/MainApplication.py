@@ -19,8 +19,9 @@ class MainApplication:
     def route_change(self, e : ft.RouteChangeEvent) -> None:
         #self.page.views.clear()
         navbar_container = Navbar( [("Home","/", "icons/home_icon.png"),
+                                    ("To-do list","/todo", "icons/todo_icon.png"),
                                     ("Task Matrix","/eisenhwr","icons/eisenhower_icon.png"), 
-                                    ("To-do list","/todo", "icons/todo_icon.png"), 
+                                    # ("To-do list","/todo", "icons/todo_icon.png"), 
                                     ("Pomodoro","/pmdr", "icons/clock_icon.png"), 
                                     ("Calendar","/clndr","icons/calendar.png")], 
                         self.page.window.width, self.page).get_container()

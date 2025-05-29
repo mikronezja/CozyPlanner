@@ -10,7 +10,7 @@ class NavbarItem(ft.Container):
         self.page_to_link_to = page_to_link_to
 
         self.icon=ft.Image(src=icon,height=50,width=50)
-        self.label=ft.Text(text,size=16,weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_800)
+        self.label=ft.Text(text,size=16,weight=ft.FontWeight.BOLD, color='#702106')
 
         self.content=ft.Column(
             controls=[self.icon,self.label],

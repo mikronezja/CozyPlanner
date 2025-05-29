@@ -116,7 +116,7 @@ class InputTask:
             height = 500,
             border_radius = 5,
             image = ft.DecorationImage(
-                src = "icons/list.png", 
+                src = "icons/create_task_background.png", 
                 fit = ft.ImageFit.FILL,
                 repeat = ft.ImageRepeat.NO_REPEAT,
                 alignment = ft.alignment.center

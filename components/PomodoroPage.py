@@ -4,16 +4,53 @@ import threading
 
 class PomodoroPage:
     def __init__(self, database):
-        self.main_text=ft.Text("Welcome to POMIDORO. IF READY CLICK START", size=30, weight=ft.FontWeight.BOLD, color=("#01C5C4"))
+        self.main_text=ft.Text("Welcome to POMIDORO. IF READY CLICK START", size=30, weight=ft.FontWeight.BOLD, color=("#702106"))
         self.time_left=25*60
         self.running=False
         self.on_break=False
         self.break_time=5*60
-        self.timer_text=ft.Text("25:00", size=50, weight=ft.FontWeight.BOLD, color=("#01C5C4"))
-        self.start_button=ft.ElevatedButton("START", on_click=self.start_timer, bgcolor=("#b8de6f"), color=("#01C5C4"))
-        self.stop_button=ft.ElevatedButton("STOP", on_click=self.stop_timer,bgcolor=("#b8de6f"), color=("#01C5C4"))
-        self.pause_button=ft.ElevatedButton("PAUSE", on_click=self.pause_timer,bgcolor=("#b8de6f"), color=("#01C5C4"))
+        self.timer_text=ft.Text("25:00", size=50, weight=ft.FontWeight.BOLD, color=("#702106"))
+        # self.start_button=ft.ElevatedButton("START", on_click=self.start_timer, bgcolor=("#b8de6f"), color=("#01C5C4"))
+        # self.stop_button=ft.ElevatedButton("STOP", on_click=self.stop_timer,bgcolor=("#b8de6f"), color=("#01C5C4"))
+        # self.pause_button=ft.ElevatedButton("PAUSE", on_click=self.pause_timer,bgcolor=("#b8de6f"), color=("#01C5C4"))
 
+        self.start_button=ft.Container(
+            content=ft.Image(src="icons/pom_play_button.png",width=50),
+            on_click=self.start_timer,
+            on_hover=self._on_hover_start,
+            offset=ft.Offset(0,0)
+        )
+        self.pause_button=ft.Container(
+            content=ft.Image(src="icons/pom_pause_button.png",width=50),
+            on_click=self.pause_timer,
+            on_hover=self._on_hover_pause,
+            offset=ft.Offset(0,0)
+        )
+        self.stop_button=ft.Container(
+            content=ft.Image(src="icons/pom_stop_button.png",width=50),
+            on_click=self.stop_timer,
+            on_hover=self._on_hover_stop,
+            offset=ft.Offset(0,0)
+        )
+    def _on_hover_start(self, e: ft.HoverEvent):
+        if e.data=="true":
+            self.start_button.offset=ft.Offset(0,0.05)
+        else:
+            self.start_button.offset=ft.Offset(0,0)
+        self.start_button.update()
+
+    def _on_hover_pause(self, e: ft.HoverEvent):
+        if e.data=="true":
+            self.pause_button.offset=ft.Offset(0,0.05)
+        else:
+            self.pause_button.offset=ft.Offset(0,0)
+        self.pause_button.update()
+    def _on_hover_stop(self, e: ft.HoverEvent):
+        if e.data=="true":
+            self.stop_button.offset=ft.Offset(0,0.05)
+        else:
+            self.stop_button.offset=ft.Offset(0,0)
+        self.stop_button.update()
     def start_timer(self,e):
         if not self.running:
             self.running=True
