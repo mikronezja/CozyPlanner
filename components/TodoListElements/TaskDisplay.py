@@ -19,7 +19,8 @@ class TaskDisplay: # single task displayed
                 label=name, 
                 value=completed, 
                 on_change=lambda e: self.on_change(task_id, i),
-                label_position=ft.LabelPosition.LEFT
+                label_position=ft.LabelPosition.LEFT,
+                label_style=ft.TextStyle(color=ft.Colors.BLUE_GREY_800, size=23)
             )
             self.task_container.append(check_box)
             self.task_column.controls.append(check_box)
@@ -27,12 +28,22 @@ class TaskDisplay: # single task displayed
 
         self.container = ft.Container(content=self.task_column, 
                                       border_radius=BORDER_RADIUS,
-                                      alignment=ft.alignment.center,
-                                      margin=MARGIN)
+                                      alignment=ft.alignment.top_center,
+                                      padding=ft.padding.only(left=30, right=30, top=60, bottom=30),
+                                      #alignment=ft.alignment.center,
+                                      #margin=MARGIN,
+                                      height=600,
+                                      width=400,
+                                      bgcolor=ft.Colors.TRANSPARENT,
+                                      #image=ft.DecorationImage(src="icons/list.png",fit=ft.ImageFit.COVER, repeat=ft.ImageRepeat.NO_REPEAT,alignment=ft.alignment.center)
+                                      
+                                      )
     
     def task_append(self, name, idx_in_database):
         next_index = len(self.task_container)
         check_box = ft.Checkbox(label=name, 
+                                               check_color=ft.Colors.GREEN,
+                                               fill_color=ft.Colors.YELLOW,
                                                value=0, 
                                                on_change=lambda e: self.on_change(idx_in_database, next_index),
                                                label_position=ft.LabelPosition.LEFT)

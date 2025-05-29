@@ -84,7 +84,7 @@ class PomodoroPage:
 
         return ft.Container(
             # bgcolor=ft.Colors.with_opacity(0.95,("#F1E189")),
-            image=ft.DecorationImage(src="icons/cont/e_yellow.png",fit=ft.ImageFit.FILL),
+            image=ft.DecorationImage(src="icons/pomodor.png",fit=ft.ImageFit.FILL),
             margin=ft.margin.only(left=200,right=200,top=10,bottom=50),
             border_radius=ft.border_radius.all(30),
             content=ft.Column(
