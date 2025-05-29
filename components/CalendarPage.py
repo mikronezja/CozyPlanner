@@ -1,10 +1,10 @@
 import flet as ft
-import calendar
 import datetime
 from .CalendarElements.MonthContainer import MonthContainer
 
 class CalendarPage:
-    def __init__(self):
+    def __init__(self, database):
+        self.database = database
         self.month_class = {
             1: "January",
             2: "February",
@@ -20,6 +20,7 @@ class CalendarPage:
             12: "December"
         }
         todays_date = datetime.datetime.now()
+
         self.displayed_year = ft.Text(value=todays_date.year)
         self.displayed_month = ft.Text(todays_date.month)
         self.displayed_day = ft.Text(todays_date.day)
@@ -38,6 +39,7 @@ class CalendarPage:
 
     def get_container(self):
         return self.calendar_container
+    
     def change_month(self, value):
         month = int(self.displayed_month.value) + value
         year = int(self.displayed_year.value)
