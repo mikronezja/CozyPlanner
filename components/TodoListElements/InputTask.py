@@ -91,9 +91,9 @@ class InputTask:
         #     alignment=ft.alignment.center
         # )
         self.container = ft.Container(
-            visible=_visible,
-            content=ft.Container(
-                content=ft.Column(
+            visible =_visible,
+            content = ft.Container(
+                content = ft.Column(
                     controls=[
                         self.name_text_field,
                         self.desc_text_field,
@@ -103,23 +103,23 @@ class InputTask:
                         self.task_urgency,
                         self.confirm_button
                     ],
-                    alignment=ft.MainAxisAlignment.START,
-                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                    alignment = ft.MainAxisAlignment.START,
+                    horizontal_alignment = ft.CrossAxisAlignment.CENTER
                 ),
                 #padding=ft.padding.all(20),
-                padding=ft.padding.only(left=30, right=30, top=50, bottom=50),
-                width=400,
-                height=500,
+                padding = ft.padding.only(left=30, right=30, top=50, bottom=50),
+                width = 400,
+                height = 500,
                 alignment=ft.alignment.top_center
             ),
-            width=400,
-            height=500,
-            border_radius=5,
-            image=ft.DecorationImage(
-                src="icons/list.png", 
-                fit=ft.ImageFit.FILL,
-                repeat=ft.ImageRepeat.NO_REPEAT,
-                alignment=ft.alignment.center
+            width = 400,
+            height = 500,
+            border_radius = 5,
+            image = ft.DecorationImage(
+                src = "icons/list.png", 
+                fit = ft.ImageFit.FILL,
+                repeat = ft.ImageRepeat.NO_REPEAT,
+                alignment = ft.alignment.center
             )
         )
 

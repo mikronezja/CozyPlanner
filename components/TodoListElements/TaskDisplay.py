@@ -10,9 +10,10 @@ class TaskDisplay: # tasks being displayed
 
         self.database = database
         self.todays_date = (todays_date.day, todays_date.month, todays_date.year)
+        self.on_task_clicked = on_task_click
 
         self.task_container = []
-        self.task_column = ft.Column(spacing=30)
+        self.task_column = ft.Column(spacing=10)
 
         for i, (task_id, date_id, name, desc, completed, urgency, importance) in enumerate(database.get_tasks(*self.todays_date)):
             self._add_checkbox_removebutton(name,task_id,id=i)
@@ -37,25 +38,59 @@ class TaskDisplay: # tasks being displayed
         self.task_column.update()
 
     def _add_checkbox_removebutton(self,name,task_id,id):
-        
-        check_box = ft.Checkbox(label=name, 
-                                check_color=ft.Colors.GREEN,
-                                fill_color=ft.Colors.YELLOW,
-                                value=0, 
-                                on_change=lambda e: self.on_change(task_id, id),
-                                label_position=ft.LabelPosition.LEFT)
+        text_container = ft.Container(
+            content=ft.Text(
+                name,
+                overflow=ft.TextOverflow.ELLIPSIS, # pokazuje ... dla dlugich tekstow
+                max_lines=2,
+                size=14,
+                weight=ft.FontWeight.NORMAL
+            ),
+            width=180,
+            height=50,
+            padding=ft.padding.all(5),
+            alignment=ft.alignment.center_left
+        )
+        check_box = ft.Checkbox(check_color=ft.Colors.GREEN,
+                    fill_color = ft.Colors.YELLOW,
+                    value = 0, 
+                    on_change=lambda e: self.on_change(task_id, id),
+                    label_position = ft.LabelPosition.LEFT)
         
         remove_button = ft.IconButton(
-                    icon=ft.Icons.CANCEL,
-                    icon_color=ft.Colors.PINK_400,
-                    icon_size=23,
-                    tooltip="Remove task",
-                    on_click=lambda e: self._task_removed(task_id, id)
+                    icon = ft.Icons.CANCEL_OUTLINED,
+                    icon_color = ft.Colors.PINK_400,
+                    icon_size = 23,
+                    tooltip = "Remove task",
+                    on_click = lambda e: self._task_removed(task_id, id)
                 )
+        display_btn = ft.Container(
+            content=ft.Image(src="../icons/display_button.png"),
+            width=100,
+            height=80,
+            on_click=lambda e: self.on_task_clicked(task_id)
+        )
         
-        row = ft.Row(controls=[check_box, remove_button],spacing=0)
-        self.task_container.append(row)
-        self.task_column.controls.append(row)
+        
+        task_row = ft.Container(
+            content=ft.Row(
+                controls=[
+                    text_container,
+                    check_box, 
+                    remove_button, 
+                    display_btn
+                ],
+                spacing=5,
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER
+            ),
+            width=400,
+            height=60,
+            padding=ft.padding.all(5),
+            margin=ft.margin.symmetric(vertical=2)
+        )
+        self.task_container.append(task_row)
+        self.task_column.controls.append(task_row)
 
     def on_change(self, id, i):
         self.database.change_task_completion(id)

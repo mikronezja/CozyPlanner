@@ -8,7 +8,6 @@ class DatabaseManager:
         import threading
         self.lock = threading.Lock()
 
-
     def create_tables(self):
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS date (
                          id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,6 +89,14 @@ class DatabaseManager:
         with self.lock:
             self.cursor.execute("DELETE FROM tasks WHERE id = ?",(task_id,))
             self.conn.commit()
+    
+    def get_date(self, date_id):
+        self.cursor.execute("SELECT * FROM date WHERE id = ?", (date_id,))
+        return self.cursor.fetchone()
+
+    def get_task_with_id(self, task_id):
+        self.cursor.execute("SELECT * FROM tasks WHERE id = ?",(task_id,))
+        return self.cursor.fetchone()
 
     def add_journal(self, day, month, year, text, mood_score):
         date_id = self.get_date_id(day, month, year)

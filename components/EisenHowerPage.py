@@ -4,22 +4,36 @@ import datetime
 
 class EisenHowerPage:
     def __init__(self, database):
-        # self.tasks = tasks
         self.database = database
         
         now = datetime.datetime.now()
         day, month, year = now.day, now.month, now.year
         
-        self.tasks = self.database.get_tasks(day,month,year)
+        tasks = self.database.get_tasks(day,month,year)
 
         def create_container(name, task_id,divider_index,i): # for task
             return ft.Row(controls=[ft.Text(value=name, size = 18, color=ft.Colors.BLUE_GREY_800), 
-                                    ft.Checkbox(on_change=lambda e: self._on_change(task_id,divider_index,i))]) 
+                                    ft.Checkbox(fill_color=ft.Colors.YELLOW, 
+                                                check_color=ft.Colors.PINK_400,
+                                                on_change=lambda e: self._on_change(task_id)),
+                                    ft.IconButton(
+                                    icon=ft.Icons.CANCEL_OUTLINED,
+                                    icon_color=ft.Colors.PINK_400,
+                                    icon_size=23,
+                                    tooltip="Remove task",
+                                    on_click=lambda e: self._task_removed(task_id,divider_index,i)
+                                    )
+                                    ],scroll=ft.ScrollMode.AUTO, expand=True) 
 
-        if len(self.tasks) > 0:
-            self._divider = [ ft.Column(spacing=10) for _ in range(4) ] 
+        if len(tasks) > 0:
+            self._divider = [ ft.Column(spacing=10,
+                                        scroll=ft.ScrollMode.AUTO, # scrollowanie w poziomie
+                                        expand=True,
+                                        width=400,
+                                        height=200,
+                                        ) for _ in range(4) ] 
 
-            for (task_id, date_id, name, desc, completed, urgency, importance) in self.tasks:
+            for (task_id, date_id, name, desc, completed, urgency, importance) in tasks:
                 if not completed:
                     divider_index = importance*2 + urgency
                     cont = self._divider[divider_index]
@@ -28,23 +42,23 @@ class EisenHowerPage:
             
 
             top_labels = ft.Row([
-            ft.Container(content=ft.Text("Urgent", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_GREY_800), expand=True, alignment=ft.alignment.center),
-            ft.Container(content=ft.Text("Not Urgent", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_GREY_800), expand=True, alignment=ft.alignment.center),
+            self._create_text("Urgent", rotate=False),
+            self._create_text("Not Urgent", rotate=False)
             ])
 
             top_row = ft.Row(controls=[
-                ft.Container(content=self._divider[3], image=ft.DecorationImage(src="icons/cont/e_yellow.png",fit=ft.ImageFit.FILL), padding=30, expand=True),  # Important, Urgent
-                ft.Container(content=self._divider[2], image=ft.DecorationImage(src="icons/cont/e_green.png",fit=ft.ImageFit.FILL), padding=30, expand=True),    # Important, Not Urgent
+                self._create_box(3,"icons/cont/e_yellow.png"), # Important, Urgent 
+                self._create_box(2, "icons/cont/e_green.png") # important, Not Urgent
             ], expand=True)
 
             bottom_row = ft.Row(controls=[
-                ft.Container(content=self._divider[1], image=ft.DecorationImage(src="icons/cont/e_blue.png",fit=ft.ImageFit.FILL), padding = 30, expand=True),  # Not Important, Urgent
-                ft.Container(content=self._divider[0], image=ft.DecorationImage(src="icons/cont/e_pink.png",fit=ft.ImageFit.FILL), padding = 30, expand=True)   # Not Important, Not Urgent
+                self._create_box(1,"icons/cont/e_blue.png"), # Not Important, Urgent
+                self._create_box(0,"icons/cont/e_pink.png") # Not Important, Not Urgent
             ], expand=True)
 
             left_labels = ft.Column([
-                ft.Container(content=ft.Text("Important", size=20,color=ft.Colors.BLUE_GREY_800, weight=ft.FontWeight.BOLD, rotate=ft.Rotate(angle=-math.pi/2)), expand=True, alignment=ft.alignment.center),
-                ft.Container(content=ft.Text("Not Important", size=20,color=ft.Colors.BLUE_GREY_800, weight=ft.FontWeight.BOLD, rotate=ft.Rotate(angle=-math.pi/2)), expand=True, alignment=ft.alignment.center),
+                self._create_text("Important", rotate=True),
+                self._create_text("Not Important", rotate=True)
             ])
 
             self.container = ft.Row( [left_labels,
@@ -57,13 +71,26 @@ class EisenHowerPage:
                 margin=ft.margin.only(top=50)
                 )
             
-    def _on_change(self,task_id, divider_index, i):
+    def _on_change(self,task_id):
         self.database.change_task_completion(task_id)
-        # if value != None:
-        #     self._divider[divider_index].visible = value
-        #     self._divider[divider_index].update()
-            # self.container.controls[i].visible = value
-            # self.container.controls[i].update()
+    
+    def _task_removed(self,task_id, divider_index, i):
+        self.database.remove_task(task_id)
+        self._divider[divider_index].controls.pop(i)
+        self._divider[divider_index].update()
+
+    def _create_box(self, divider_idx, src):
+        return ft.Container(content=self._divider[divider_idx], 
+                            image=ft.DecorationImage(src=src,fit=ft.ImageFit.FILL),
+                            width=500,
+                            padding = 30, 
+                            expand=True)
+    
+    def _create_text(self, text, rotate):
+        return ft.Container(content=ft.Text(text, size=20, 
+                                            weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_GREY_800),
+                                            expand=True, alignment=ft.alignment.center, 
+                                            rotate=(ft.Rotate(angle=-math.pi/2) if rotate else ft.Rotate(angle=0)))
 
     def get_container(self):
         return self.container

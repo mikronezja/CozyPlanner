@@ -1,4 +1,62 @@
 import flet as ft 
 
-class SingleDisplay:
-    pass
+class SingleTask:
+    def __init__(self, database, task_id, go_back):            
+        self.database = database
+        (task_id, date_id, name, desc, completed, urgency, importance) = self.database.get_task_with_id(task_id)
+
+        (day,month,year) = self.__display_date(date_id)
+        dates = ft.Row(controls=[ft.Text(day,size=10), ft.Text(month,size=10), ft.Text(year,size=10)])
+        
+        self.__back_btn = ft.Container(
+                    content=ft.Image(src="../icons/go_back.png",width=200),
+                    on_click=go_back,
+                    offset=ft.Offset(0,0),
+                    width=70,
+                    on_hover=self.__on_hover
+                )
+
+        main_row = ft.Row(
+            controls=[
+                ft.Container(content=dates, width=80),
+                ft.Container(
+                    content=ft.Text(name, overflow=ft.TextOverflow.ELLIPSIS),
+                    width=130,
+                    expand=False
+                ),
+                self.__back_btn
+            ],
+            spacing=20,
+            alignment=ft.MainAxisAlignment.CENTER
+        )
+
+        desciption = ft.Row(controls=[ft.Text(desc)],width=200)
+        self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),main_row, desciption]), width=300)
+
+    def __display_date(self, date_id):
+        month_class = {
+            1: "Jan",
+            2: "Feb",
+            3: "Mar",
+            4: "Apr",
+            5: "May",
+            6: "June",
+            7: "July",
+            8: "Aug",
+            9: "Sept",
+            10: "Oct",
+            11: "Nov",
+            12: "Dec"
+        }
+        (id, day, month, year) = self.database.get_date(date_id)
+        return (day, month_class[month], year)
+
+    def __on_hover(self, e):
+        if e.data=="true":
+            self.__back_btn.offset=ft.Offset(0,0.03)
+        else:
+            self.__back_btn.offset=ft.Offset(0,0)
+        self.__back_btn.update()
+
+    def get_container(self):
+        return self.container
