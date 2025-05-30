@@ -32,7 +32,7 @@ class SingleTask:
             alignment=ft.MainAxisAlignment.CENTER
         )
 
-        desciption = ft.Row(controls=[ft.Text(desc,color='#702106',size=18,max_lines=None,no_wrap=False,text_align=ft.TextAlign.START)],width=200)
+        desciption = ft.Row(controls=[ft.Text(desc,color='#702106',size=18,max_lines=None,width=250,no_wrap=False,text_align=ft.TextAlign.START)],width=200)
         self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),ft.Container(content=dates, width=80),main_row, desciption,self.__back_btn], horizontal_alignment=ft.CrossAxisAlignment.CENTER,spacing=5), width=300)
 
     def __display_date(self, date_id):

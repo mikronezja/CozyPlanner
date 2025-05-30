@@ -9,7 +9,7 @@ class DayContainer(ft.Container):
         self.content = ft.Column(
             [self.text],
             alignment=ft.MainAxisAlignment.CENTER,
-            horizontal_alignment=ft.CrossAxisAlignment.CENTER
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
         self.border_radius = 6
         self.on_click = on_click
