@@ -64,7 +64,7 @@ class ToDoListPage:
             self.right_side
         ],
         expand=True,
-        alignment=ft.MainAxisAlignment.SPACE_EVENLY
+        alignment=ft.MainAxisAlignment.CENTER
        )
     
     def __on_hover(self, e):
