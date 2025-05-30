@@ -5,7 +5,7 @@ from .CalendarElements.MonthContainer import MonthContainer
 class CalendarPage:
     def __init__(self, database):
         self.database = database
-        self.month_class = {
+        self.month_class = { # przepisac na enuma!
             1: "January",
             2: "February",
             3: "March",
@@ -26,20 +26,59 @@ class CalendarPage:
         self.displayed_day = ft.Text(todays_date.day)
         self.month_text = ft.Text(value=self.month_class[todays_date.month])
 
-        self.month_container = MonthContainer(year=int(self.displayed_year.value), month=int(self.displayed_month.value)).get_container()
+        self.year_nav_row = ft.Row(
+            controls=[
+                ft.Button(text="<-", on_click=lambda _: self.change_year(-1)),
+                self.displayed_year, 
+                ft.Button(text="->", on_click=lambda _: self.change_year(1))
+            ],
+            alignment=ft.alignment.center
+        )
+        
+        self.month_nav_row = ft.Row(
+            controls=[
+                ft.Button(text="<-", on_click=lambda _: self.change_month(-1)), 
+                self.month_text, 
+                ft.Button(text="->", on_click=lambda _: self.change_month(1))
+            ],
+            alignment=ft.alignment.center
+        )
+
+        self.month_container = MonthContainer(
+            database, 
+            year=int(self.displayed_year.value), 
+            month=int(self.displayed_month.value),
+            higher_on_click=lambda e: self.__higher_on_click(e),
+            show_nav_callback=self.show_navigation
+        ).get_container()
+        
+        self.month_row = ft.Row(controls=[self.month_container])
+        
         self.calendar_container = ft.Container(
-                    content=ft.Column(controls=[
-                        ft.Row(controls=[ft.Button(text="<-", on_click= lambda _: self.change_year(-1)),self.displayed_year, ft.Button(text="->", on_click= lambda _:self.change_year(1))],alignment = ft.alignment.center), 
-                        ft.Row(controls=[ft.Button(text="<-", on_click=lambda _:self.change_month(-1)), self.month_text, ft.Button(text="->", on_click=lambda _:self.change_month(1)) ]),
-                        ft.Row(controls=[self.month_container])
-                    ], alignment=ft.alignment.center, expand=True),
-                    alignment=ft.alignment.center,
-                    expand=True
-                )
+            content=ft.Column(
+                controls=[
+                    self.year_nav_row,
+                    self.month_nav_row,
+                    self.month_row
+                ], 
+                expand=True
+            ),
+            expand=True
+        )
 
     def get_container(self):
         return self.calendar_container
     
+    def __higher_on_click(self, e):
+        self.year_nav_row.visible = False
+        self.month_nav_row.visible = False
+        self.calendar_container.update()
+
+    def show_navigation(self):
+        self.year_nav_row.visible = True
+        self.month_nav_row.visible = True
+        self.calendar_container.update()
+
     def change_month(self, value):
         month = int(self.displayed_month.value) + value
         year = int(self.displayed_year.value)
@@ -54,11 +93,32 @@ class CalendarPage:
         self.displayed_month.value = str(month)
         self.displayed_year.value = str(year)
         self.month_text.value = self.month_class[month]
-        self.month_container.controls = [MonthContainer(month=month, year=year).get_container()]
-
+        
+        new_month_container = MonthContainer(
+            month=month, 
+            year=year, 
+            database=self.database,
+            higher_on_click=lambda e: self.__higher_on_click(e),
+            show_nav_callback=self.show_navigation
+        ).get_container()
+        
+        self.month_row.controls = [new_month_container]
+        self.month_container = new_month_container
+        
         self.calendar_container.update()
     
     def change_year(self, value):
         self.displayed_year.value = str(int(self.displayed_year.value) + value)
-        self.month_container.controls = [MonthContainer(month=int(self.displayed_month.value), year=int(self.displayed_year.value)).get_container()]
+        
+        new_month_container = MonthContainer(
+            month=int(self.displayed_month.value), 
+            year=int(self.displayed_year.value),
+            database=self.database,
+            higher_on_click=lambda e: self.__higher_on_click(e),
+            show_nav_callback=self.show_navigation
+        ).get_container()
+        
+        self.month_row.controls = [new_month_container]
+        self.month_container = new_month_container
+        
         self.calendar_container.update()

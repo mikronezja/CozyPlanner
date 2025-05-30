@@ -23,7 +23,7 @@ class DatabaseManager:
                          journal TEXT,
                          mood_score INTEGER,
                          FOREIGN KEY (date_id) REFERENCES date(id)
-                         )""")
+                         )""") # mood_score 1-5
         
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS tasks (
                          id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -98,16 +98,23 @@ class DatabaseManager:
         self.cursor.execute("SELECT * FROM tasks WHERE id = ?",(task_id,))
         return self.cursor.fetchone()
 
-    def add_journal(self, day, month, year, text, mood_score):
+    def add_journal(self, day, month, year, journal, mood_score):
         date_id = self.get_date_id(day, month, year)
         self.cursor.execute("INSERT INTO journal (date_id, journal, mood_score) VALUES (?,?,?)", 
-                           (date_id, text, mood_score))
+                           (date_id, journal, mood_score))
         self.conn.commit()
 
     def get_journal(self, day, month, year):
         date_id = self.get_date_id(day, month, year)
         self.cursor.execute("SELECT * FROM journal WHERE date_id = ?", (date_id,))
-        return self.cursor.fetchall()
+        return self.cursor.fetchone()
+    
+    def change_journal(self, day, month, year, journal, mood_score):
+        date_id = self.get_date_id(day, month, year)
+        self.cursor.execute("""
+            UPDATE journal SET journal = ?, mood_score = ? WHERE date_id = ?
+        """, (journal, mood_score, date_id))
+        self.conn.commit()
 
     def add_pomodoro(self, day, month, year, seconds):
         date_id = self.get_date_id(day, month, year)
