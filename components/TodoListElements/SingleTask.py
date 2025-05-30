@@ -32,15 +32,10 @@ class SingleTask:
             alignment=ft.MainAxisAlignment.CENTER
         )
 
-<<<<<<< HEAD
         # desciption = ft.Row(controls=[ft.Text(desc,color='#702106',size=18,max_lines=None,no_wrap=False,text_align=ft.TextAlign.START)],width=200)
         desciption = ft.Container(content=ft.Text(desc,color='#702106',size=18,max_lines=None,no_wrap=False,text_align=ft.TextAlign.START,selectable=False,overflow=ft.TextOverflow.CLIP,),padding=ft.padding.all(10),  width=250,)
 
         self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),ft.Container(content=dates, width=80),main_row, desciption,self.__back_btn], horizontal_alignment=ft.CrossAxisAlignment.CENTER, alignment=ft.MainAxisAlignment.SPACE_BETWEEN,spacing=5), width=300)
-=======
-        desciption = ft.Row(controls=[ft.Text(desc,color='#702106',size=18,max_lines=None,width=250,no_wrap=False,text_align=ft.TextAlign.START)],width=200)
-        self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),ft.Container(content=dates, width=80),main_row, desciption,self.__back_btn], horizontal_alignment=ft.CrossAxisAlignment.CENTER,spacing=5), width=300)
->>>>>>> 44bd27c2b7768f49bc116a97eea8a5c9ccb4c091
 
     def __display_date(self, date_id):
         month_class = {
