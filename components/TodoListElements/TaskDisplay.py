@@ -1,11 +1,13 @@
 import flet as ft 
+from datetime import datetime, timedelta
+from ..Functionalities.CalendarHelpers import CalendarHelpers
 
 BGCOLOR = "white"
 BORDER_RADIUS = 5
 MARGIN = 10
 
 class TaskDisplay: # tasks being displayed
-    def __init__(self, database, todays_date, on_task_click):
+    def __init__(self, database, todays_date, on_task_click, show_previous_tasks = True):
         # self.tasks = tasks
 
         self.database = database
@@ -15,8 +17,18 @@ class TaskDisplay: # tasks being displayed
         self.task_container = []
         self.task_column = ft.Column(spacing=10)
 
-        for i, (task_id, date_id, name, desc, completed, urgency, importance) in enumerate(database.get_tasks(*self.todays_date)):
+        #tasks displayed
+        tasks = database.get_tasks(*self.todays_date)
+
+        if show_previous_tasks:
+            prev_tasks = database.get_tasks(*CalendarHelpers.get_previous_day())
+            for task in prev_tasks:
+                if not task.completed:
+                    tasks.append(task)
+
+        for i, (task_id, date_id, name, desc, completed, urgency, importance) in enumerate(tasks):
             self._add_checkbox_removebutton(name,task_id,completed,id=i)
+
         # end for
 
         self.container = ft.Container(content=self.task_column, 
@@ -29,7 +41,6 @@ class TaskDisplay: # tasks being displayed
                                       width=400,
                                       bgcolor=ft.Colors.TRANSPARENT,
                                       #image=ft.DecorationImage(src="icons/list.png",fit=ft.ImageFit.COVER, repeat=ft.ImageRepeat.NO_REPEAT,alignment=ft.alignment.center)
-                                      
                                       )
     
     def task_append(self, name, idx_in_database):

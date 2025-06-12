@@ -7,3 +7,4 @@ class WeekDay(Enum):
     Fr = 4
     Sa = 5
     Su = 6
+    

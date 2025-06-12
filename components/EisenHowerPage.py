@@ -1,9 +1,11 @@
 import flet as ft 
 import math
 import datetime
+from .Functionalities.CalendarHelpers import CalendarHelpers
+
 
 class EisenHowerPage:
-    def __init__(self, database):
+    def __init__(self, database, show_previous_tasks = True):
         self.database = database
         self.checkbox_refs = {}
         
@@ -11,6 +13,12 @@ class EisenHowerPage:
         day, month, year = now.day, now.month, now.year
         
         tasks = self.database.get_tasks(day,month,year)
+
+        if show_previous_tasks:
+            prev_tasks = database.get_tasks(*CalendarHelpers.get_previous_day())
+            for task in prev_tasks:
+                if not task.completed:
+                    tasks.append(task)
 
         def create_container(name, task_id, completed, divider_index,i): # for task
             self.checkbox_refs[task_id] = ft.Checkbox(fill_color = ft.Colors.YELLOW, 

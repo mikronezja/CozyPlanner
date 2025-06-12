@@ -39,7 +39,13 @@ class SingleTask:
                                                   overflow=ft.TextOverflow.CLIP,)
                                                   ,padding=ft.padding.all(10),  width=250,)
 
-        self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),ft.Container(content=dates, width=80),main_row, desciption,self.__back_btn], horizontal_alignment=ft.CrossAxisAlignment.CENTER, alignment=ft.MainAxisAlignment.SPACE_BETWEEN,spacing=5), width=300)
+        self.container = ft.Container(content=ft.Column(controls=[ft.Row(height=40),
+                                                                  ft.Container(content=dates, width=80)
+                                                                  ,main_row, desciption,
+                                                                  self.__back_btn], 
+                                                                  horizontal_alignment=ft.CrossAxisAlignment.CENTER, 
+                                                                  alignment=ft.MainAxisAlignment.SPACE_BETWEEN,spacing=5),
+                                                                  width=300)
 
     def __display_date(self, date_id):
         (id, day, month, year) = self.database.get_date(date_id)

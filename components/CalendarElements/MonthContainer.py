@@ -14,7 +14,9 @@ class MonthContainer:
         self.show_nav_callback = show_nav_callback
         self.month_days = calendar.monthrange(year, month)[1]
         self.starting_weekday = calendar.monthrange(year, month)[0]
-        self.days_container = [ DayContainer(day=i,month=month, year=year, on_click=lambda e, day=i: self.__on_click(e,day,month,year,higher_on_click)) for i in range(1, self.month_days+1) ]
+        self.days_container = [ DayContainer(day=i,month=month, year=year, 
+                                             on_click=lambda e, 
+                                             day=i: self.__on_click(e,day,month,year,higher_on_click)) for i in range(1, self.month_days+1) ]
 
         ## self.container
         self.default_container = self.__create_month_view()
@@ -28,8 +30,9 @@ class MonthContainer:
         month_view = ft.Column()
         
         header_row = ft.Row()
-        for i in range(WEEK_DAY_SIZE):
-            header_row.controls.append(ft.Container(content=ft.Text(WeekDay(i).name,size=30, color=ft.Colors.BLUE_GREY_800),width=100, height=50,alignment=ft.alignment.center))
+        for i in range(len(WeekDay)):
+            header_row.controls.append(ft.Container(content=ft.Text(WeekDay(i).name,size=30, color=ft.Colors.BLUE_GREY_800),
+                                                    width=100, height=50,alignment=ft.alignment.center))
 
         month_view.controls.append(header_row)
 
@@ -70,7 +73,7 @@ class MonthContainer:
                 thumb_color=ft.Colors.PINK_200,
                 )
         
-        if values: # values != None
+        if values:
             (id, date_id, journal, md_score) = values
             description.value = journal
             mood_score.value = md_score

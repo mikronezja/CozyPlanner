@@ -1,30 +1,17 @@
 import flet as ft
 import datetime
 from .CalendarElements.MonthContainer import MonthContainer
+from .Enums.Month import Month
 
 class CalendarPage:
     def __init__(self, database):
         self.database = database
-        self.month_class = { # przepisac na enuma!
-            1: "January",
-            2: "February",
-            3: "March",
-            4: "April",
-            5: "May",
-            6: "June",
-            7: "July",
-            8: "August",
-            9: "September",
-            10: "October",
-            11: "November",
-            12: "December"
-        }
         todays_date = datetime.datetime.now()
 
         self.displayed_year = ft.Text(value=todays_date.year)
         self.displayed_month = ft.Text(todays_date.month)
         self.displayed_day = ft.Text(todays_date.day)
-        self.month_text = ft.Text(value=self.month_class[todays_date.month])
+        self.month_text = ft.Text(value=Month(todays_date.month).name)
 
         self.year_nav_row = ft.Row(
             controls=[
@@ -92,7 +79,7 @@ class CalendarPage:
 
         self.displayed_month.value = str(month)
         self.displayed_year.value = str(year)
-        self.month_text.value = self.month_class[month]
+        self.month_text.value = Month(month).name
         
         new_month_container = MonthContainer(
             month=month, 
