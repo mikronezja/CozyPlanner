@@ -39,7 +39,10 @@ class DatabaseManager:
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS pomodoro(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         date_id INTEGER,
+                        initial_time INTEGER,
                         total_seconds INTEGER,
+                        session_number INTEGER,
+                        is_working INTEGER DEFAULT 1,
                         FOREIGN KEY (date_id) REFERENCES date(id)
                         )""")
         self.conn.commit()
@@ -70,7 +73,7 @@ class DatabaseManager:
             with self.lock:
                 self.cursor.execute("SELECT completed FROM tasks WHERE id = ?", (task_id,))
                 result = self.cursor.fetchone()  
-                
+
                 if result is not None:
                     current_completed = result[0]
                     new_completed = 1 if current_completed == 0 else 0
@@ -121,11 +124,30 @@ class DatabaseManager:
         """, (journal, mood_score, date_id))
         self.conn.commit()
 
-    def add_pomodoro(self, day, month, year, seconds):
+    def add_pomodoro(self, day, month, year, initial_time, total_seconds,session_number, is_working):
         date_id = self.get_date_id(day, month, year)
-        self.cursor.execute("INSERT INTO pomodoro (date_id, total_seconds) VALUES (?,?)", 
-                           (date_id, seconds))
+        self.cursor.execute("INSERT INTO pomodoro (date_id, initial_time, total_seconds, session_number, is_working) VALUES (?,?,?,?,?)", 
+                           (date_id, initial_time, total_seconds, session_number, is_working))
         self.conn.commit()
+    
+    def get_latest_pomodoro(self,day,month, year):
+        date_id = self.get_date_id(day, month, year)
+        self.cursor.execute("SELECT * FROM pomodoro WHERE date_id = ? ORDER BY id DESC LIMIT 1", (date_id,))
+        return self.cursor.fetchone()
+    
+    def sum_all_previous_pomodoros(self, day, month, year):
+        latest = self.get_latest_pomodoro(day, month, year)
+        if latest:
+            _, date_id, _, _, session_number, _ = latest
+            self.cursor.execute("""
+                DELETE FROM pomodoro WHERE session_number = ? AND date_id = ?
+            """, (session_number, date_id))
+            self.conn.commit()
+    
+    def get_pomodoros_from_day(self, day, month, year):
+        date_id = self.get_date_id(day, month, year)
+        self.cursor.execute("SELECT * FROM pomodoro WHERE date_id = ?", (date_id,))
+        return self.cursor.fetchall()
 
     def close(self):
         self.conn.close()

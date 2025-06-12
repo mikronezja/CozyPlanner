@@ -5,6 +5,8 @@ from .EisenHowerPage import EisenHowerPage
 from .PomodoroPage import PomodoroPage
 from .HomePage import HomePage
 from .CalendarPage import CalendarPage
+from .StatisticsPage import StatisticsPage
+
 from .CalendarElements.CalendarDatabase import DatabaseManager
 # import icons
 
@@ -23,7 +25,8 @@ class MainApplication:
                                     ("Task Matrix","/eisenhwr","icons/eisenhower_icon.png"), 
                                     # ("To-do list","/todo", "icons/todo_icon.png"), 
                                     ("Pomodoro","/pmdr", "icons/clock_icon.png"), 
-                                    ("Calendar","/clndr","icons/calendar.png")], 
+                                    ("Calendar","/clndr","icons/calendar.png"),
+                                    ("Statistics","/sttstcs", "icons/statistics_icon.png")], 
                         self.page.window.width, self.page).get_container()
         
         route_map = {
@@ -31,7 +34,8 @@ class MainApplication:
             "/eisenhwr":EisenHowerPage(self.database).get_container(),
             "/pmdr":PomodoroPage(self.database).get_container(),
             "/todo":ToDoListPage(self.database).get_container(),
-            "/clndr":CalendarPage(self.database).get_container()
+            "/clndr":CalendarPage(self.database).get_container(),
+            "/sttstcs":StatisticsPage(self.database).get_container()
         }
 
         content = route_map.get(e.route)
