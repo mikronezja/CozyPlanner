@@ -92,6 +92,25 @@ class DatabaseManager:
         date_id = self.get_date_id(day, month, year)
         self.cursor.execute("SELECT * FROM tasks WHERE date_id = ?", (date_id,))
         return self.cursor.fetchall()
+    
+    def get_tasks_from_month(self,month,year):
+        self.cursor.execute("SELECT id from date WHERE month = ? AND year = ?", (month, year))
+        id_list = self.cursor.fetchall()
+        task_list = []
+
+        for id in id_list:
+            self.cursor.execute("SELECT * FROM tasks WHERE date_id = ?", (id,))
+            task_list += self.cursor.fetchall()
+        return task_list
+
+    def get_tasks_from_year(self,year):
+        self.cursor.execute("SELECT id from date WHERE year = ?", (year,))
+        id_list = self.cursor.fetchall()
+        task_list = []
+        for id in id_list:
+            self.cursor.execute("SELECT * FROM tasks WHERE date_id = ?", (id,))
+            task_list += self.cursor.fetchall()
+        return task_list
 
     def remove_task(self, task_id):
         with self.lock:
@@ -138,11 +157,12 @@ class DatabaseManager:
     def sum_all_previous_pomodoros(self, day, month, year):
         latest = self.get_latest_pomodoro(day, month, year)
         if latest:
-            _, date_id, _, _, session_number, _ = latest
+            id, date_id, initial_time, total_seconds, session_number, is_working = latest
             self.cursor.execute("""
                 DELETE FROM pomodoro WHERE session_number = ? AND date_id = ?
             """, (session_number, date_id))
             self.conn.commit()
+            self.add_pomodoro(day,month,year,initial_time,total_seconds,session_number,is_working)
     
     def get_pomodoros_from_day(self, day, month, year):
         date_id = self.get_date_id(day, month, year)

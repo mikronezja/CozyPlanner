@@ -15,7 +15,9 @@ class PomodoroPage:
         self.time_left = self.work_duration
 
         self.database = database
-        self.current_day = (datetime.datetime.now().day, datetime.datetime.now().month, datetime.datetime.now().year)
+
+        now = datetime.datetime.now()
+        self.current_day = (now.day, now.month, now.year)
         
         record = self.database.get_latest_pomodoro(*self.current_day)
         if record:
@@ -38,6 +40,8 @@ class PomodoroPage:
         self.pause_button.disabled = True
         self.stop_button.disabled = True
 
+        self.container = self.get_container()
+
     def _create_button(self, icon_path, click_handler, reverse=False):
         button = ft.Container(
             content=ft.Image(src=icon_path, width=50, rotate=(math.pi if reverse else 0)),
@@ -58,8 +62,7 @@ class PomodoroPage:
 
     def update_timer_display(self):
         self.timer_text.value = self.format_time(self.time_left)
-        if self.timer_text.page:
-            self.timer_text.page.update()
+        self.timer_text.update()
 
     def update_main_text(self):
         if self.running:
@@ -84,7 +87,7 @@ class PomodoroPage:
     def subtract_time(self, e):
         if not self.running:
             target_duration = self.break_duration if self.on_break else self.work_duration
-            new_duration = max(60, target_duration - 60)
+            new_duration = max(60, ((target_duration - 60)) // 60 * 60)
             
             if self.on_break:
                 self.break_duration = new_duration
@@ -93,11 +96,12 @@ class PomodoroPage:
                 self.time_left = self.work_duration
             
             self.update_timer_display()
+            e.page.update()
 
     def add_time(self, e):
         if not self.running:
             target_duration = self.break_duration if self.on_break else self.work_duration
-            new_duration = target_duration + 60
+            new_duration = ((target_duration + 60) // 60) * 60
             
             if self.on_break:
                 self.break_duration = new_duration
@@ -106,6 +110,7 @@ class PomodoroPage:
                 self.time_left = self.work_duration
 
             self.update_timer_display()
+            e.page.update()
 
     def start_timer(self, e):
         if not self.running:
@@ -137,7 +142,8 @@ class PomodoroPage:
                 
                 if (self.work_duration - self.time_left) % 10 == 0:
                     initial_time = self.break_duration if self.on_break else self.work_duration
-                    self.database.add_pomodoro(self.current_day[0], self.current_day[1], self.current_day[2], initial_time,initial_time - self.time_left,self.session_number,not self.on_break)
+                    self.database.add_pomodoro(self.current_day[0], self.current_day[1], self.current_day[2], 
+                                               initial_time,initial_time - self.time_left,self.session_number,not self.on_break)
             else:
                 self.database.sum_all_previous_pomodoros(*self.current_day)
                 
