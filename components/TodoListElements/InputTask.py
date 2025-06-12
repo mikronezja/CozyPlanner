@@ -85,7 +85,7 @@ class InputTask:
                     horizontal_alignment = ft.CrossAxisAlignment.CENTER
                 ),
                 #padding=ft.padding.all(20),
-                padding = ft.padding.only(left=30, right=30, top=50, bottom=50),
+                padding = ft.padding.only(left=30, right=20, top=50, bottom=50),
                 width = 400,
                 height = 500,
                 alignment=ft.alignment.top_center

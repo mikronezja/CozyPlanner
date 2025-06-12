@@ -55,7 +55,8 @@ class TaskDisplay: # tasks being displayed
                 overflow=ft.TextOverflow.ELLIPSIS, # pokazuje ... dla dlugich tekstow
                 max_lines=2,
                 size=14,
-                weight=ft.FontWeight.NORMAL
+                weight=ft.FontWeight.NORMAL,
+                color='#702106'
             ),
             width=180,
             height=50,
@@ -77,7 +78,7 @@ class TaskDisplay: # tasks being displayed
                 )
         
         display_btn = ft.Container(
-            content=ft.Image(src="../icons/display_button.png"),
+            content=ft.Image(src="../icons/more.png"),
             width=100,
             height=80,
             on_click=lambda e: self.on_task_clicked(task_id)

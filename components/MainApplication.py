@@ -16,7 +16,8 @@ class MainApplication:
     def __init__(self, page : ft.Page):
         self.page = page
         self.database = DatabaseManager()
-        self.tasks = [] # poki co takie rozwiazanie - potem moze jakas bazka 
+        self.tasks = [] 
+# poki co takie rozwiazanie - potem moze jakas bazka 
     
     def route_change(self, e : ft.RouteChangeEvent) -> None:
         #self.page.views.clear()

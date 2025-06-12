@@ -11,7 +11,6 @@ def main(page: ft.Page):
    # shadow_color=ft.Colors.GREEN_900,
    # highlight_color=ft.Colors.CYAN_400
    )
-
    
    main_app = MainApplication(page) # creating a main app page
    main_app.display()
