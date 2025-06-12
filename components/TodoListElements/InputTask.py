@@ -23,16 +23,7 @@ class InputTask:
 
         self.task_importance_value = ft.Text(value="Not Important", visible=_visible,color=ft.Colors.BLACK)
         self.task_urgency_value = ft.Text(value="Not Urgent", visible=_visible,color=ft.Colors.BLACK)
-
-        def get_cupertino_slider(change_function):
-            return  ft.CupertinoSlider(
-                divisions=1,
-                max=1,
-                min=0,
-                active_color=SLIDER_COLOR,
-                thumb_color=SLIDER_COLOR,
-                on_change=change_function,
-                visible=_visible)
+        
         def get_slider(change_function):
             slider= ft.Slider(
                 min=0,
@@ -77,19 +68,6 @@ class InputTask:
         self.task_importance_slider,self.task_importance = get_slider(handle_importance_change)
         self.task_urgency_slider,self.task_urgency = get_slider(handle_urgency_change)
 
-
-        # self.container = ft.Container(
-        #     ft.Column(
-        #         controls=[self.name_text_field, 
-        #                   self.desc_text_field, 
-        #                   self.task_importance_value,
-        #                   self.task_importance, 
-        #                   self.task_urgency_value,
-        #                   self.task_urgency,
-        #                   self.confirm_button]
-        #     ),
-        #     alignment=ft.alignment.center
-        # )
         self.container = ft.Container(
             visible =_visible,
             content = ft.Container(
@@ -125,7 +103,7 @@ class InputTask:
 
 
     def set_visible(self, value):
-        self.container.visible=value
+        self.container.visible = value
         self.name_text_field.visible = value
         self.desc_text_field.visible = value
         self.confirm_button.visible = value

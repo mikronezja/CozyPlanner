@@ -5,17 +5,21 @@ import datetime
 class EisenHowerPage:
     def __init__(self, database):
         self.database = database
+        self.checkbox_refs = {}
         
         now = datetime.datetime.now()
         day, month, year = now.day, now.month, now.year
         
         tasks = self.database.get_tasks(day,month,year)
 
-        def create_container(name, task_id,divider_index,i): # for task
+        def create_container(name, task_id, completed, divider_index,i): # for task
+            self.checkbox_refs[task_id] = ft.Checkbox(fill_color = ft.Colors.YELLOW, 
+                                                check_color = ft.Colors.PINK_400,
+                                                value = (completed == 1),
+                                                on_change = lambda e: self._on_change(task_id))
+
             return ft.Row(controls=[ft.Text(value=name, size = 18, color=ft.Colors.BLUE_GREY_800), 
-                                    ft.Checkbox(fill_color=ft.Colors.YELLOW, 
-                                                check_color=ft.Colors.PINK_400,
-                                                on_change=lambda e: self._on_change(task_id)),
+                                    self.checkbox_refs[task_id],
                                     ft.IconButton(
                                     icon=ft.Icons.CANCEL_OUTLINED,
                                     icon_color=ft.Colors.PINK_400,
@@ -34,11 +38,9 @@ class EisenHowerPage:
                                         ) for _ in range(4) ] 
 
             for (task_id, date_id, name, desc, completed, urgency, importance) in tasks:
-                if not completed:
-                    divider_index = importance*2 + urgency
-                    cont = self._divider[divider_index]
-
-                    cont.controls.append(create_container(name,task_id,divider_index, len(cont.controls)))
+                divider_index = importance*2 + urgency
+                cont = self._divider[divider_index]
+                cont.controls.append(create_container(name,task_id,completed,divider_index, len(cont.controls)))
             
 
             top_labels = ft.Row([
@@ -72,7 +74,11 @@ class EisenHowerPage:
                 )
             
     def _on_change(self,task_id):
-        self.database.change_task_completion(task_id)
+        new_state = self.database.change_task_completion(task_id)
+
+        if new_state is not None:
+            self.checkbox_refs[task_id].value = (new_state == 1)
+            self.checkbox_refs[task_id].update()
     
     def _task_removed(self,task_id, divider_index, i):
         self.database.remove_task(task_id)

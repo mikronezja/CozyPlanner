@@ -1,6 +1,9 @@
 import flet as ft
 import calendar
 from .DateBox import DayContainer
+from ..Enums.WeekDay import WeekDay
+
+WEEK_DAY_SIZE = 7
 
 class MonthContainer:
     def __init__(self,database, month, year, higher_on_click, show_nav_callback=None):
@@ -23,20 +26,10 @@ class MonthContainer:
 
     def __create_month_view(self):
         month_view = ft.Column()
-
-        days_of_week = {
-            0: "Mo",
-            1: "Tu",
-            2: "We",
-            3: "Th",
-            4: "Fr",
-            5: "Sa",
-            6: "Su",
-        }
-
+        
         header_row = ft.Row()
-        for i in range(len(days_of_week)):
-            header_row.controls.append(ft.Container(content=ft.Text(days_of_week[i],size=30, color=ft.Colors.BLUE_GREY_800),width=100, height=50,alignment=ft.alignment.center))
+        for i in range(WEEK_DAY_SIZE):
+            header_row.controls.append(ft.Container(content=ft.Text(WeekDay(i).name,size=30, color=ft.Colors.BLUE_GREY_800),width=100, height=50,alignment=ft.alignment.center))
 
         month_view.controls.append(header_row)
 

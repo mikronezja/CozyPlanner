@@ -67,17 +67,22 @@ class DatabaseManager:
 
     def change_task_completion(self, task_id):
         try: 
-            with self.lock: # zeby wszystko bylo na jednym watku - wymaga tego sqlite3
+            with self.lock:
                 self.cursor.execute("SELECT completed FROM tasks WHERE id = ?", (task_id,))
-                self.conn.commit()
-
-                value = 1 if self.cursor.fetchone() == 0 else 0
-
-                self.cursor.execute("UPDATE tasks SET completed = ? WHERE id = ?", (value, task_id))
-                self.conn.commit()
-                return value
+                result = self.cursor.fetchone()  
+                
+                if result is not None:
+                    current_completed = result[0]
+                    new_completed = 1 if current_completed == 0 else 0
+                    self.cursor.execute("UPDATE tasks SET completed = ? WHERE id = ?", 
+                                    (new_completed, task_id))
+                    self.conn.commit()
+                    return new_completed
+                else:
+                    print(f"[ERROR] Task with id {task_id} not found")
+                    return None
         except Exception as db_error:
-            print(f"[ERROR] w dodawaniu do bazy danych: {db_error}")
+            print(f"[ERROR] w zmianie completion: {db_error}")
             return None
 
     def get_tasks(self, day, month, year):
