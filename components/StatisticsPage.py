@@ -27,7 +27,7 @@ class StatisticsPage:
         self.month_button = ft.ElevatedButton(text="month")
         self.day_button = ft.ElevatedButton(text="day")
         self.year_button = ft.ElevatedButton(text="year")
-        self.week_button=ft.ElevatedButton(text="week", on_click=self.week_on_click)
+        self.week_button=ft.ElevatedButton(text="week", on_click=self.week_on_click,visible=True)
         self.stats_task=ft.Container(
             content=self.stat_chart(),
             visible=False,
@@ -38,6 +38,8 @@ class StatisticsPage:
         self.stats_task.visible=True
         self.stats_task.content=self.stat_chart()
         self.stats_task.update()
+        self.week_button.visible=False
+        self.week_button.update()
         
     def current_statistics_container(self):
         number_of_tasks = ft.Text(value="Today you commited to ", color=TEXT_COLOR ,size=20)
@@ -98,8 +100,14 @@ class StatisticsPage:
         else:
             pass
     
-    
+    def exit_on_click(self, e):
+        self.stats_task.visible = False
+        self.week_button.visible = True
+        self.stats_task.update()
+        self.week_button.update()
     def stat_chart(self):
+        exit_button=ft.ElevatedButton(text="exit", on_click=self.exit_on_click,visible=True)
+        
         title=ft.Container(
             content=ft.Text(
                 value="Here's your weekly productivity chart - tasks!!", color=TEXT_COLOR, size=15
@@ -145,7 +153,7 @@ class StatisticsPage:
         alignment=ft.MainAxisAlignment.SPACE_BETWEEN
     )
         return ft.Column(
-            controls=[title,bar_chart,labels]
+            controls=[title,bar_chart,labels, exit_button]
         )
 
     def get_container(self):
