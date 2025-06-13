@@ -22,7 +22,7 @@ With Cosy Planner, you can:
 ### 📋 To-Do List + Eisenhower Matrix  
 ![task](./readme_images/task.png)  
 ![task_display](./readme_images/display_task.png)
-
+![eisenhower](./readme_images/eisenhower_matrix.png)
 ---
 
 ### 🧮 Database  
