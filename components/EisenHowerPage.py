@@ -20,7 +20,7 @@ class EisenHowerPage:
                                                 value = (completed == 1),
                                                 on_change = lambda e: self._on_change(task_id))
 
-            return ft.Row(controls=[ft.Text(value=name, size = 18, color=ft.Colors.BLUE_GREY_800), 
+            return ft.Row(controls=[ft.Text(value=name, size = 18, color='#702106'), 
                                     self.checkbox_refs[task_id],
                                     ft.IconButton(
                                     icon=ft.Icons.CANCEL_OUTLINED,
@@ -77,7 +77,7 @@ class EisenHowerPage:
                                     expand=True)], alignment=ft.alignment.center, expand=True )
         else:
             self.container = ft.Container(
-                content=ft.Text(value="No tasks have been added",color=ft.Colors.BLUE_GREY_800, size=25),
+                content=ft.Text(value="No tasks have been added",color='#702106', size=25),
                 alignment=ft.alignment.center,
                 margin=ft.margin.only(top=50)
                 )
@@ -103,7 +103,7 @@ class EisenHowerPage:
     
     def _create_text(self, text, rotate):
         return ft.Container(content=ft.Text(text, size=20, 
-                                            weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_GREY_800),
+                                            weight=ft.FontWeight.BOLD,color='#702106'),
                                             expand=True, alignment=ft.alignment.center, 
                                             rotate=(ft.Rotate(angle=-math.pi/2) if rotate else ft.Rotate(angle=0)))
 
