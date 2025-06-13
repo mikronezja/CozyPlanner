@@ -5,10 +5,14 @@ confirm_button_src = "icons/add_task_button.png"
 
 class InputTask:
     def __init__(self, on_input_task_click, _visible = False):
-        self.name_text_field = ft.TextField( hint_text="Task name...",
-                label="Task name", visible = _visible,color=ft.Colors.BLACK,width=200)
-        self.desc_text_field = ft.TextField( hint_text="Description...",
-                label="Description", visible = _visible,color=ft.Colors.BLACK,width=200)
+        self.name_text_field = ft.TextField( 
+                label="Task name", 
+                label_style=ft.TextStyle(color="#702106"),
+                border_color="#702106",
+                visible = _visible,color=ft.Colors.BLACK,width=200)
+        self.desc_text_field = ft.TextField(
+                label="Description",
+                label_style=ft.TextStyle(color="#702106"), border_color="#702106", visible = _visible,color=ft.Colors.BLACK,width=200)
         # self.confirm_button = ft.ElevatedButton(text="Add", on_click=lambda _: on_input_task_click(self.name_text_field.value,
         #                                                                                            self.desc_text_field.value),
         #                                                                                                visible = _visible)
@@ -87,11 +91,13 @@ class InputTask:
                 #padding=ft.padding.all(20),
                 padding = ft.padding.only(left=30, right=20, top=50, bottom=50),
                 width = 400,
-                height = 410,
-                alignment=ft.alignment.top_center
+
+                # height = 500,
+                alignment=ft.alignment.center
             ),
             width = 400,
-            height = 410,
+            # height = 480,
+
             border_radius = 5,
             image = ft.DecorationImage(
                 src = "icons/create_task_background.png", 
@@ -122,8 +128,8 @@ class InputTask:
         self.confirm_button.update()
 
     def reset_field_values(self):
-        self.name_text_field.value = "Task name..."
-        self.desc_text_field.value = "Description..."
+        self.name_text_field.value = ""
+        self.desc_text_field.value = ""
 
     def update(self):
         self.container.update()
