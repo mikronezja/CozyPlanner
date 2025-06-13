@@ -34,7 +34,7 @@ class ToDoListPage:
                 ),
                 height=600,
                 width=400,
-                padding=ft.padding.only(left=30, right=30, top=50, bottom=50),
+                padding=ft.padding.only(left=30, right=30, top=60, bottom=30),
                 alignment=ft.alignment.top_center,
             ),
             border_radius=5,

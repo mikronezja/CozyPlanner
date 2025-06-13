@@ -16,10 +16,9 @@ class MonthContainer:
                                              on_click=lambda e, 
                                              day=i: self.__on_click(e,day,month,year,higher_on_click)) for i in range(1, self.month_days+1) ]
 
-        ## self.container
         self.default_container = self.__create_month_view()
         
-        # Fixed width container to ensure proper centering
+
         self.container = ft.Container(
             content=self.default_container,
             width=714,
@@ -31,22 +30,21 @@ class MonthContainer:
             width=714
         )
         
-        # Header row with identical spacing and alignment as day rows
         header_row = ft.Row(
-            spacing=2,  # Same spacing as day rows
-            alignment=ft.MainAxisAlignment.START  # Align to start for consistency
+            spacing=2, 
+            alignment=ft.MainAxisAlignment.START
         )
         
         for i in range(len(WeekDay)):
             header_container = ft.Container(
                 content=ft.Text(
                     WeekDay(i).name,
-                    size=16,  # Slightly smaller than day numbers
-                    color=ft.Colors.BLUE_GREY_600,
+                    size=16, 
+                    color='#702106',
                     weight=ft.FontWeight.BOLD
                 ),
-                width=100,  # Same width as DayContainer
-                height=30,  # Slightly smaller height than day containers
+                width=100,
+                height=30,
                 alignment=ft.alignment.center,
                 border_radius=3
             )
@@ -54,9 +52,8 @@ class MonthContainer:
 
         month_view.controls.append(header_row)
 
-        # Day rows with consistent spacing
         row = ft.Row(
-            spacing=2,  # Same spacing as header
+            spacing=2,
             alignment=ft.MainAxisAlignment.START
         )
         
@@ -86,6 +83,11 @@ class MonthContainer:
         month_view.controls.append(row)      
         
         return month_view
+    
+    def _handle_hover(self, button, e: ft.HoverEvent):
+        button.offset = ft.Offset(0, 0.05) if e.data == "true" else ft.Offset(0, 0)
+        if button.page:
+            button.page.update()
 
     def __on_click(self,e,day,month,year,higher_on_click):
         higher_on_click(e)
@@ -97,7 +99,7 @@ class MonthContainer:
         values = self.database.get_journal(day,month,year)
 
         # default values
-        description = ft.TextField(value="Your journal...", multiline=True, min_lines=3, max_lines=6)
+        description = ft.TextField(value="Your journal...",color='#702106',bgcolor=ft.Colors.WHITE,border_color='#702106', multiline=True, min_lines=3, max_lines=6)
         mood_score = ft.Slider(                
                 min=0,
                 max=4,
@@ -131,31 +133,49 @@ class MonthContainer:
                 self.show_nav_callback()
             self.container.update()
         
-        confirm_button = ft.Button(
-            text='Save',
-            on_click=save_journal
+        confirm_button = ft.Container(
+            content=ft.Text(),
+            width=100,
+            height=50,
+            image=ft.DecorationImage(src='icons/save_btn.png', 
+                                     fit=ft.ImageFit.FILL),
+            on_click=save_journal,
+            on_hover=lambda e: self._handle_hover(confirm_button,e)
         )
 
-        back_button = ft.Button(
-            text='← Back to Calendar',
-            on_click=go_back
+        back_button=ft.Container(
+            content=ft.Text(),
+            width=100,
+            height=50,
+            image=ft.DecorationImage(src='icons/back_to_calendar.png', 
+                                     fit=ft.ImageFit.FILL),
+            on_click=go_back,
+            on_hover=lambda e: self._handle_hover(back_button,e)
         )
 
-        # Add mood score labels
-        mood_labels = ft.Row([
-            ft.Text("😢", size=16),
-            ft.Text("😐", size=16),
-            ft.Text("🙂", size=16),
-            ft.Text("😊", size=16),
-            ft.Text("😄", size=16),
-        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
+        def mood_container(src):
+            return ft.Container(content=ft.Text(), 
+                                width=100,height=50, 
+                                image=ft.DecorationImage(src=src, fit=ft.ImageFit.FILL))
+        
+        moods_srcs = [
+            'icons/mood_icons/crying_face.png',
+            'icons/mood_icons/sad_face.png',
+            'icons/mood_icons/mid_face.png',
+            'icons/mood_icons/happy_face.png',
+            'icons/mood_icons/heart_face.png'
+        ]
+
+        mood_labels = ft.Row(controls=[], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
+        for src in moods_srcs:
+            mood_labels.controls.append(mood_container(src))
         
         return ft.Column(
             controls=[
                 back_button,
-                ft.Text(f"Journal for {day}/{month}/{year}", size=20, weight=ft.FontWeight.BOLD),
+                ft.Text(f"Journal for {day}/{month}/{year}",color='#702106',size=20, weight=ft.FontWeight.BOLD),
                 description, 
-                ft.Text("Mood Score:", size=16),
+                ft.Text("Mood Score:", size=16,color='#702106', weight=ft.FontWeight.BOLD),
                 mood_labels,
                 mood_score,
                 ft.Row(
@@ -166,6 +186,7 @@ class MonthContainer:
             spacing=10,
             scroll=ft.ScrollMode.AUTO
         )
+    
 
     def get_container(self):
         return self.container

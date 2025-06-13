@@ -1,10 +1,11 @@
 import flet as ft
+import datetime
 
 class DayContainer(ft.Container):
     def __init__(self, day, month, year, on_click = None):
         super().__init__()
 
-        self.text = ft.Text(str(day), size=20, color=ft.Colors.BLUE_GREY_800)
+        self.text = ft.Text(str(day), size=20, color='#702106' if day != datetime.datetime.now().day else ft.Colors.BLUE)
 
         self.content = ft.Column(
             [self.text],

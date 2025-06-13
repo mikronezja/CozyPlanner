@@ -44,7 +44,8 @@ class SingleTask:
                                                                   ,main_row, desciption,
                                                                   self.__back_btn], 
                                                                   horizontal_alignment=ft.CrossAxisAlignment.CENTER, 
-                                                                  alignment=ft.MainAxisAlignment.SPACE_BETWEEN,spacing=5),
+                                                                  spacing=5),
+                                                                  height=400,
                                                                   width=300)
 
     def __display_date(self, date_id):
