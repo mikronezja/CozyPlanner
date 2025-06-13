@@ -41,6 +41,7 @@ In the calendar, you can:
 
 ### 🧠 AI-Powered Affirmations 🤖  
 Generates **positive affirmations** tailored just for you!
+![affirmations](./readme_images/affirmations.png)
 
 ---
 
