@@ -1,5 +1,6 @@
 import flet as ft
 import datetime
+import math
 from .CalendarElements.MonthContainer import MonthContainer
 from .Enums.Month import Month
 
@@ -15,20 +16,20 @@ class CalendarPage:
 
         self.year_nav_row = ft.Row(
             controls=[
-                ft.Button(text="<-", on_click=lambda _: self.change_year(-1)),
+                self.__button_container(on_click=lambda _: self.change_year(-1),subtract=True),
                 self.displayed_year, 
-                ft.Button(text="->", on_click=lambda _: self.change_year(1))
+                self.__button_container(on_click=lambda _: self.change_year(1),subtract=False)
             ],
-            alignment=ft.alignment.center
+            alignment=ft.MainAxisAlignment.CENTER
         )
         
         self.month_nav_row = ft.Row(
             controls=[
-                ft.Button(text="<-", on_click=lambda _: self.change_month(-1)), 
+                self.__button_container(on_click=lambda _: self.change_month(-1),subtract=True),
                 self.month_text, 
-                ft.Button(text="->", on_click=lambda _: self.change_month(1))
+                self.__button_container(on_click=lambda _: self.change_month(1),subtract=False)
             ],
-            alignment=ft.alignment.center
+            alignment=ft.MainAxisAlignment.CENTER
         )
 
         self.month_container = MonthContainer(
@@ -39,7 +40,8 @@ class CalendarPage:
             show_nav_callback=self.show_navigation
         ).get_container()
         
-        self.month_row = ft.Row(controls=[self.month_container])
+        self.month_row = ft.Row(controls=[self.month_container], 
+                                alignment=ft.MainAxisAlignment.CENTER)
         
         self.calendar_container = ft.Container(
             content=ft.Column(
@@ -48,10 +50,19 @@ class CalendarPage:
                     self.month_nav_row,
                     self.month_row
                 ], 
+                spacing=5,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 expand=True
             ),
+            alignment=ft.alignment.center,
             expand=True
         )
+
+    def __button_container(self, on_click, subtract):
+        return ft.Container(content=ft.Text(),  width=50, height=30,
+                            image=ft.DecorationImage(src="icons/more.png",fit=ft.ImageFit.FILL),
+                            rotate=math.pi if subtract else 0, on_click=on_click)
+
 
     def get_container(self):
         return self.calendar_container

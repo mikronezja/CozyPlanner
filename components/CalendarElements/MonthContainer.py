@@ -3,8 +3,6 @@ import calendar
 from .DateBox import DayContainer
 from ..Enums.WeekDay import WeekDay
 
-WEEK_DAY_SIZE = 7
-
 class MonthContainer:
     def __init__(self,database, month, year, higher_on_click, show_nav_callback=None):
         self.database = database
@@ -21,34 +19,71 @@ class MonthContainer:
         ## self.container
         self.default_container = self.__create_month_view()
         
+        # Fixed width container to ensure proper centering
         self.container = ft.Container(
             content=self.default_container,
-            expand=True
+            width=714,
         )
 
     def __create_month_view(self):
-        month_view = ft.Column()
+        month_view = ft.Column(
+            spacing=2,
+            width=714
+        )
         
-        header_row = ft.Row()
+        # Header row with identical spacing and alignment as day rows
+        header_row = ft.Row(
+            spacing=2,  # Same spacing as day rows
+            alignment=ft.MainAxisAlignment.START  # Align to start for consistency
+        )
+        
         for i in range(len(WeekDay)):
-            header_row.controls.append(ft.Container(content=ft.Text(WeekDay(i).name,size=30, color=ft.Colors.BLUE_GREY_800),
-                                                    width=100, height=50,alignment=ft.alignment.center))
+            header_container = ft.Container(
+                content=ft.Text(
+                    WeekDay(i).name,
+                    size=16,  # Slightly smaller than day numbers
+                    color=ft.Colors.BLUE_GREY_600,
+                    weight=ft.FontWeight.BOLD
+                ),
+                width=100,  # Same width as DayContainer
+                height=30,  # Slightly smaller height than day containers
+                alignment=ft.alignment.center,
+                border_radius=3
+            )
+            header_row.controls.append(header_container)
 
         month_view.controls.append(header_row)
 
-        row = ft.Row()
-        # dodaje puste pola do poczatku tygodnia
+        # Day rows with consistent spacing
+        row = ft.Row(
+            spacing=2,  # Same spacing as header
+            alignment=ft.MainAxisAlignment.START
+        )
+        
+        # jesli sie nie zaczyna od poniedzialku
         for _ in range(self.starting_weekday):
-            row.controls.append(ft.Container(width=100,height=50))
+            empty_container = ft.Container(
+                width=100,
+                height=50 
+            )
+            row.controls.append(empty_container)
 
         for day in self.days_container:
             if len(row.controls) == 7:
                 month_view.controls.append(row)
-                row = ft.Row()
+                row = ft.Row(
+                    spacing=2,
+                    alignment=ft.MainAxisAlignment.START
+                )
             row.controls.append(day)
 
-        if row.controls:
-            month_view.controls.append(row)
+        # Add the last row if it has any controls
+        while len(row.controls) != 7:
+            row.controls.append(ft.Container(
+                width=100,
+                height=50 
+            ))
+        month_view.controls.append(row)      
         
         return month_view
 

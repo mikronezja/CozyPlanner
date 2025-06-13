@@ -18,12 +18,13 @@ class TaskDisplay: # tasks being displayed
         self.task_column = ft.Column(spacing=10)
 
         #tasks displayed
-        tasks = database.get_tasks(*self.todays_date)
+        tasks = self.database.get_tasks(*self.todays_date)
 
         if show_previous_tasks:
             prev_tasks = database.get_tasks(*CalendarHelpers.get_previous_day())
             for task in prev_tasks:
-                if not task.completed:
+                (task_id, date_id, name, desc, completed, urgency, importance) = task
+                if not completed:
                     tasks.append(task)
 
         for i, (task_id, date_id, name, desc, completed, urgency, importance) in enumerate(tasks):

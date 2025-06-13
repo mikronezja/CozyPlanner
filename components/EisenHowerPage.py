@@ -14,12 +14,6 @@ class EisenHowerPage:
         
         tasks = self.database.get_tasks(day,month,year)
 
-        if show_previous_tasks:
-            prev_tasks = database.get_tasks(*CalendarHelpers.get_previous_day())
-            for task in prev_tasks:
-                if not task.completed:
-                    tasks.append(task)
-
         def create_container(name, task_id, completed, divider_index,i): # for task
             self.checkbox_refs[task_id] = ft.Checkbox(fill_color = ft.Colors.YELLOW, 
                                                 check_color = ft.Colors.PINK_400,
@@ -44,6 +38,13 @@ class EisenHowerPage:
                                         width=400,
                                         height=200,
                                         ) for _ in range(4) ] 
+            if show_previous_tasks:
+                prev_tasks = database.get_tasks(*CalendarHelpers.get_previous_day())
+                for (task_id, date_id, name, desc, completed, urgency, importance) in prev_tasks:
+                    if not completed:
+                        divider_index = importance*2 + urgency
+                        cont = self._divider[divider_index]
+                        cont.controls.append(create_container(name,task_id,completed,divider_index, len(cont.controls)))
 
             for (task_id, date_id, name, desc, completed, urgency, importance) in tasks:
                 divider_index = importance*2 + urgency
