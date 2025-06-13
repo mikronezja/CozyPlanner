@@ -11,7 +11,7 @@ class CalendarPage:
 
         self.displayed_year = ft.Text(value=todays_date.year,color='#702106')
         self.displayed_month = ft.Text(todays_date.month)
-        self.month_text = ft.Text(value=Month(todays_date.month).name, color='#702106' )
+        self.month_text = ft.Text(value=Month(todays_date.month).name, color='#702106')
 
         self.year_nav_row = ft.Row(
             controls=[
