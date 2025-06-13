@@ -91,11 +91,13 @@ class InputTask:
                 #padding=ft.padding.all(20),
                 padding = ft.padding.only(left=30, right=20, top=50, bottom=50),
                 width = 400,
+
                 # height = 500,
                 alignment=ft.alignment.center
             ),
             width = 400,
             # height = 480,
+
             border_radius = 5,
             image = ft.DecorationImage(
                 src = "icons/create_task_background.png", 
