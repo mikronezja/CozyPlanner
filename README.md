@@ -41,13 +41,18 @@ In the calendar, you can:
 
 ### 🧠 AI-Powered Affirmations 🤖  
 Generates **positive affirmations** tailored just for you!
+![affirmations](./readme_images/affirmations.png)
 
 ---
 
 ### 🍅 Pomodoro Timer  
 Boost your **focus** 👁️ and **productivity** 🧠 using the Pomodoro technique!
-
+![pomodoro](./readme_images/pomodoro.png)
 ---
+
+### 📈 Statistics 
+Track your **progress** 📊 using the inbuilt **statistics tab**📈 !
+![statisctics](./readme_images/statistics.png)
 
 ### 🖼️ Built with Flet  
 We used the **Flet framework** to create graphics and UI elements.  

@@ -63,18 +63,23 @@ class StatisticsPage:
             ## minutes in pomodoro
             day_pomodoros = self.database.get_pomodoros_from_day(*self.current_day)
 
-            minute_count = 0
-            pom_count = 0
-            for (_,_,_,total_seconds,_,is_working) in day_pomodoros:
+            ## minutes in pomodoro
+            day_pomodoros = self.database.get_pomodoros_from_day(*self.current_day)
+            pomodoro_sessions = {}
+            for (_, _, _, total_seconds, session_number, is_working) in day_pomodoros:
                 if is_working:
-                    pom_count += 1
-                    minute_count = total_seconds
+                    current_max = pomodoro_sessions.get(session_number, 0)
+                    pomodoro_sessions[session_number] = max(current_max, total_seconds)
 
-            minutes_in_pomodoro.value += str(minute_count)
-            minutes_in_pomodoro.value += " minutes in pomodoro in a whole "
+            # sums the final time
+            total_seconds_spent = sum(pomodoro_sessions.values())
+            minute_count = total_seconds_spent // 60
+            
+            pom_count = len(pomodoro_sessions)
+
+            minutes_in_pomodoro.value += f"{minute_count} minutes in pomodoro in a whole "
             ## pomodoro sessions
-            minutes_in_pomodoro.value += str(pom_count)
-            minutes_in_pomodoro.value+=" sessions."
+            minutes_in_pomodoro.value += f"{pom_count} sessions."
             ## mood score
             journal = self.database.get_journal(*self.current_day)
             if journal:
