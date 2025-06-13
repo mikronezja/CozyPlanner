@@ -135,9 +135,9 @@ class MonthContainer:
         
         confirm_button = ft.Container(
             content=ft.Text(),
-            width=100,
+            width=120,
             height=50,
-            image=ft.DecorationImage(src='icons/save_btn.png', 
+            image=ft.DecorationImage(src='icons/save.png', 
                                      fit=ft.ImageFit.FILL),
             on_click=save_journal,
             on_hover=lambda e: self._handle_hover(confirm_button,e)
@@ -147,7 +147,7 @@ class MonthContainer:
             content=ft.Text(),
             width=100,
             height=50,
-            image=ft.DecorationImage(src='icons/back_to_calendar.png', 
+            image=ft.DecorationImage(src='icons/back.png', 
                                      fit=ft.ImageFit.FILL),
             on_click=go_back,
             on_hover=lambda e: self._handle_hover(back_button,e)

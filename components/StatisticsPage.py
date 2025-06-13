@@ -27,7 +27,7 @@ class StatisticsPage:
         self.month_button = ft.ElevatedButton(text="month")
         self.day_button = ft.ElevatedButton(text="day")
         self.year_button = ft.ElevatedButton(text="year")
-        self.week_button=ft.ElevatedButton(text="week", on_click=self.week_on_click,visible=True)
+        self.week_button=ft.Container(content=ft.Image(src="icons/task_stats.png", height=50), on_click=self.week_on_click,visible=True)
         self.stats_task=ft.Container(
             content=self.stat_chart(),
             visible=False,
@@ -82,7 +82,13 @@ class StatisticsPage:
             minutes_in_pomodoro.value += f"{pom_count} sessions."
             ## mood score
             journal = self.database.get_journal(*self.current_day)
-            mood_score = ft.Text(value="Your today's mood was : " + str(journal.mood_score), color=TEXT_COLOR,size=20) if journal else ft.Text("No journal was written today!", color=TEXT_COLOR,size=20)
+            if journal:
+                mood_value = journal[3]
+                mood_labels = ["very sad", "sad", "neutral", "happy", "very happy"]
+                mood_score = ft.Text(value=f"Your today's mood was: {mood_labels[mood_value]}", color=TEXT_COLOR, size=20)
+            else:
+                mood_score = ft.Text("No journal was written today!", color=TEXT_COLOR, size=20)
+            # mood_score = ft.Text(value="Your today's mood was : " + str(journal[]), color=TEXT_COLOR,size=20) if journal else ft.Text("No journal was written today!", color=TEXT_COLOR,size=20)
             ending_text=ft.Text(value="Thank you for today's work! See you again tomorrow!!", color=TEXT_COLOR,size=20)
             # ending_text="Thank you for today's work! See you again tomorrow!!"
             if completed_task_counter>0:
@@ -111,7 +117,7 @@ class StatisticsPage:
         self.stats_task.update()
         self.week_button.update()
     def stat_chart(self):
-        exit_button=ft.ElevatedButton(text="exit", on_click=self.exit_on_click,visible=True)
+        exit_button=ft.Container(content=ft.Image(src="icons/back.png", height=40), on_click=self.exit_on_click,visible=True)
         
         title=ft.Container(
             content=ft.Text(
