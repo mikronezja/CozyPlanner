@@ -18,15 +18,15 @@ class HomePage:
             content=ft.Text("Welcome to CosyPlanner!! Click the button to get your daily affirmation!",color='#702106',size=30,text_align=ft.TextAlign.CENTER,),
             alignment=ft.alignment.center,
         )
-        self.frog_image = ft.Image(src="icons/frog.png", height=100)
-        self.frog = ft.Container(
-            content=self.frog_image,
+        self.bee_image = ft.Image(src="icons/bee.png", height=100)
+        self.bee = ft.Container(
+            content=self.bee_image,
             # padding=ft.Padding(top=100, left=100, right=100, bottom=100),
             visible=False,
-            on_hover=self.on_frog_hover,
+            on_hover=self.on_bee_hover,
             offset=ft.Offset(0,0)
        )
-        self.frog.animate_offset = ft.Animation(800)
+        self.bee.animate_offset = ft.Animation(800)
         self.tree_image = ft.Image(
             src="icons/tree.png",
             height=500
@@ -55,18 +55,18 @@ class HomePage:
         self.text_container.visible = True
         e.page.update()  
     def on_tree_click(self, e):
-        self.frog.visible = not self.frog.visible
-        self.frog.update()
-    def on_frog_hover(self,e: ft.HoverEvent):
+        self.bee.visible = not self.bee.visible
+        self.bee.update()
+    def on_bee_hover(self,e: ft.HoverEvent):
         dirs=[-1,0,1]
         if e.data=="true":
             randomdirx=choice(dirs)
             randomdiry=choice(dirs)
-            self.frog.offset=ft.Offset(1.0*randomdirx,1.0*randomdiry)
-            self.frog.update()
+            self.bee.offset=ft.Offset(1.0*randomdirx,1.0*randomdiry)
+            self.bee.update()
         else:
-            self.frog.offset=ft.Offset(0,0)
-        self.frog.update()
+            self.bee.offset=ft.Offset(0,0)
+        self.bee.update()
     # def get_container(self):
     #     return ft.Container(
     #         content=ft.Column(controls=[self.welcome_text, ft.Row(
@@ -127,7 +127,7 @@ class HomePage:
                 main_content,
                 # self.frog
                 ft.Container(
-                content=self.frog,
+                content=self.bee,
                 alignment=ft.alignment.center,
                 width=100
                     )
