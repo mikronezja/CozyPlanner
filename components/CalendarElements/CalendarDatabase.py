@@ -1,5 +1,6 @@
 import sqlite3
-
+from datetime import *
+from ..Enums.WeekDay import WeekDay
 class DatabaseManager:
     def __init__(self, db_name='calendar.db'):
         self.conn = sqlite3.connect(db_name, check_same_thread=False)
@@ -168,6 +169,24 @@ class DatabaseManager:
         date_id = self.get_date_id(day, month, year)
         self.cursor.execute("SELECT * FROM pomodoro WHERE date_id = ?", (date_id,))
         return self.cursor.fetchall()
+    def get_completed_task_from_last_week(self):
+        today=datetime.today()
+        start_of_week=today-timedelta(days=today.weekday())
+        dates=[(start_of_week+timedelta(days=i)) for i in range(7)]
+        res={}
+        for date in dates:
+            weekday=WeekDay(date.weekday())
+            date_id=self.get_date_id(date.day, date.month, date.year)
+            self.cursor.execute("""
+            SELECT COUNT(*) FROM tasks WHERE date_id = ? AND completed = 1
+            """,(date_id,))
+            count_done=self.cursor.fetchone()[0]
+            self.cursor.execute("""
+            SELECT COUNT(*) FROM tasks WHERE date_id = ?
+            """,(date_id,))
+            count_all=self.cursor.fetchone()[0]
+            res[weekday]=(count_done,count_all)
+        return res
 
     def close(self):
         self.conn.close()

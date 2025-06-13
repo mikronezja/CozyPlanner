@@ -55,7 +55,7 @@ class TaskDisplay: # tasks being displayed
                 name,
                 overflow=ft.TextOverflow.ELLIPSIS, # pokazuje ... dla dlugich tekstow
                 max_lines=2,
-                size=14,
+                size=16,
                 weight=ft.FontWeight.NORMAL,
                 color='#702106'
             ),
@@ -64,24 +64,23 @@ class TaskDisplay: # tasks being displayed
             padding=ft.padding.all(5),
             alignment=ft.alignment.center_left
         )
-        check_box = ft.Checkbox(check_color=ft.Colors.GREEN,
-                    fill_color = ft.Colors.YELLOW,
+        check_box = ft.Checkbox(check_color=ft.Colors.PINK_200,
+                    fill_color = ft.Colors.PINK_100,
                     value = (completed == 1), 
                     on_change=lambda e: self.on_change(task_id, id),
                     label_position = ft.LabelPosition.LEFT)
         
         remove_button = ft.IconButton(
                     icon = ft.Icons.CANCEL_OUTLINED,
-                    icon_color = ft.Colors.PINK_400,
+                    icon_color = ft.Colors.PINK_200,
                     icon_size = 23,
                     tooltip = "Remove task",
                     on_click = lambda e: self._task_removed(task_id, id)
                 )
         
         display_btn = ft.Container(
-            content=ft.Image(src="../icons/more.png"),
-            width=100,
-            height=80,
+            content=ft.Image(src="../icons/more.png", width=50),
+            width=50,
             on_click=lambda e: self.on_task_clicked(task_id)
         )
         

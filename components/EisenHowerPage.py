@@ -15,8 +15,8 @@ class EisenHowerPage:
         tasks = self.database.get_tasks(day,month,year)
 
         def create_container(name, task_id, completed, divider_index,i): # for task
-            self.checkbox_refs[task_id] = ft.Checkbox(fill_color = ft.Colors.YELLOW, 
-                                                check_color = ft.Colors.PINK_400,
+            self.checkbox_refs[task_id] = ft.Checkbox(fill_color = ft.Colors.PINK_100, 
+                                                check_color = ft.Colors.PINK_200,
                                                 value = (completed == 1),
                                                 on_change = lambda e: self._on_change(task_id))
 
@@ -24,7 +24,7 @@ class EisenHowerPage:
                                     self.checkbox_refs[task_id],
                                     ft.IconButton(
                                     icon=ft.Icons.CANCEL_OUTLINED,
-                                    icon_color=ft.Colors.PINK_400,
+                                    icon_color=ft.Colors.PINK_200,
                                     icon_size=23,
                                     tooltip="Remove task",
                                     on_click=lambda e: self._task_removed(task_id,divider_index,i)
