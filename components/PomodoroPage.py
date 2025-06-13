@@ -3,9 +3,10 @@ import time
 import math
 import datetime
 import threading
+from .Sounds.Music import Music
 
 class PomodoroPage:
-    def __init__(self, database):
+    def __init__(self, database, page):
         self.running = False
         self.on_break = False
         
@@ -20,6 +21,7 @@ class PomodoroPage:
         self.current_day = (now.day, now.month, now.year)
         
         record = self.database.get_latest_pomodoro(*self.current_day)
+
         if record:
             _id, _date_id, initial_time, total_seconds, session_number, is_working = record
             self.work_duration = initial_time
@@ -39,6 +41,8 @@ class PomodoroPage:
 
         self.pause_button.disabled = True
         self.stop_button.disabled = True
+
+        self.audio = Music(src='assets/music/stop.mp3',volume=1, page=page)
 
         self.container = self.get_container()
 
@@ -154,6 +158,8 @@ class PomodoroPage:
                 else:
                     self.time_left = self.work_duration
                 self.session_number += 1
+
+                self.audio.call()
                 
                 self.update_main_text()
                 self.update_timer_display()

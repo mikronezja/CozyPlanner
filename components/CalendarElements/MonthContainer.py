@@ -42,7 +42,7 @@ class MonthContainer:
                 content=ft.Text(
                     WeekDay(i).name,
                     size=16,  # Slightly smaller than day numbers
-                    color=ft.Colors.BLUE_GREY_600,
+                    color='#702106', #ft.Colors.BLUE_GREY_600,
                     weight=ft.FontWeight.BOLD
                 ),
                 width=100,  # Same width as DayContainer

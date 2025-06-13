@@ -9,9 +9,8 @@ class CalendarPage:
         self.database = database
         todays_date = datetime.datetime.now()
 
-        self.displayed_year = ft.Text(value=todays_date.year)
-        self.displayed_month = ft.Text(todays_date.month)
-        self.displayed_day = ft.Text(todays_date.day)
+        self.displayed_year = ft.Text(value=todays_date.year,color='#702106')
+        self.displayed_month = ft.Text(todays_date.month, color='#702106')
         self.month_text = ft.Text(value=Month(todays_date.month).name)
 
         self.year_nav_row = ft.Row(
